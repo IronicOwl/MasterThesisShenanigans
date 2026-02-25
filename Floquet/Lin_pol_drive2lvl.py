@@ -166,7 +166,7 @@ def sweep_tracked_phases(w0=10, A=1, sweep_low=5, sweep_high=15, sweep_steps=400
     return freqs, th0, th1, gap
 
 w0 = 10
-freqs, th0, th1, gap = sweep_tracked_phases(w0=w0, A=1, sweep_low=5, sweep_high=15, sweep_steps=400)
+freqs, th0, th1, gap = sweep_tracked_phases(w0=w0, A=2, sweep_low=8, sweep_high=12, sweep_steps=100)
 
 plt.figure(figsize=(6,4))
 plt.plot(freqs, gap)

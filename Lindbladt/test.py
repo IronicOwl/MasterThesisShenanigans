@@ -2,11 +2,13 @@ import matplotlib
 matplotlib.use("Agg")  # safe for parallel/non-interactive plotting
 import matplotlib.pyplot as plt
 import numpy as np
+import time
 from multiprocessing import Pool, cpu_count
 
 print("Hello Eric")
 
 def make_plot(freq):
+    time.sleep(10)
     x = np.linspace(1, 10, 100)
     y = np.sin(freq * x)
     plt.figure()

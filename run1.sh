@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=lindblad_test
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=5
+#SBATCH --cpus-per-task=16
 #SBATCH --mem-per-cpu=8G
-#SBATCH --time=05:00:00
+#SBATCH --time=02:00:00
 #SBATCH --output=%x_%j.out
 #SBATCH --error=%x_%j.err
 

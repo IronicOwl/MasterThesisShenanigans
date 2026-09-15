@@ -1,0 +1,31 @@
+Starting sweep for sector: E_+-_i using 8 workers
+N=5, M=100, lambda range=[0.45, 0.65], steps=8
+
+[worker 2164345] initializing...
+[worker 2164347] initializing...
+[worker 2164346] initializing...
+[worker 2164348] initializing...
+[worker 2164350] initializing...
+[worker 2164351] initializing...
+[worker 2164352] initializing...
+[worker 2164349] initializing...
+[worker 2164345] ready. Block size: 45000
+[worker 2164349] ready. Block size: 45000
+[worker 2164346] ready. Block size: 45000
+[worker 2164351] ready. Block size: 45000
+[worker 2164347] ready. Block size: 45000
+[worker 2164348] ready. Block size: 45000
+[worker 2164350] ready. Block size: 45000
+[worker 2164352] ready. Block size: 45000
+Lam=0.4500 | converged in 34.0s | leading eval=-4.317712e-03+4.245566e-02j
+Lam=0.4786 | converged in 34.1s | leading eval=-6.251335e-03+4.745582e-02j
+Lam=0.5071 | converged in 40.8s | leading eval=-1.012179e-02+5.196736e-02j
+Lam=0.5357 | converged in 40.9s | leading eval=-1.078572e-02+4.195187e-05j
+Lam=0.5929 | converged in 46.8s | leading eval=-4.437181e-03-1.681859e-03j
+Lam=0.6214 | converged in 47.9s | leading eval=-2.229783e-02-1.027885e-02j
+Lam=0.6500 | converged in 47.9s | leading eval=-5.774247e-02-3.113949e-02j
+Lam=0.5643 | converged in 49.2s | leading eval=-6.148176e-04-9.324008e-05j
+
+Total sweep time: 49.5s
+Data saved to Plots\Gap_Closure\Plot_Data\eigenvalues_E_+-_i_N5_M100.npz
+Plot saved.

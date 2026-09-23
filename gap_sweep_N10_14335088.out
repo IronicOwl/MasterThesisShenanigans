@@ -1,0 +1,71 @@
+Starting sweep for sector: E_+-_i using 16 workers
+N=4, M=80, lambda range=[0.45, 0.57], steps=32
+
+[worker 631168] initializing...
+[worker 631169] initializing...
+[worker 631170] initializing...
+[worker 631171] initializing...
+[worker 631172] initializing...
+[worker 631173] initializing...
+[worker 631174] initializing...
+[worker 631175] initializing...
+[worker 631176] initializing...
+[worker 631177] initializing...
+[worker 631178] initializing...
+[worker 631179] initializing...
+[worker 631180] initializing...
+[worker 631181] initializing...
+[worker 631182] initializing...
+[worker 631183] initializing...
+[worker 631168] ready. Block size: 20000
+[worker 631169] ready. Block size: 20000
+[worker 631170] ready. Block size: 20000
+[worker 631171] ready. Block size: 20000
+[worker 631172] ready. Block size: 20000
+[worker 631173] ready. Block size: 20000
+[worker 631174] ready. Block size: 20000
+[worker 631175] ready. Block size: 20000
+[worker 631176] ready. Block size: 20000
+[worker 631177] ready. Block size: 20000
+[worker 631178] ready. Block size: 20000
+[worker 631179] ready. Block size: 20000
+[worker 631180] ready. Block size: 20000
+[worker 631181] ready. Block size: 20000
+[worker 631182] ready. Block size: 20000
+[worker 631183] ready. Block size: 20000
+Lam=0.4577 | converged in 12.2s | leading eval=-9.521896e-03+4.852042e-02j
+Lam=0.4655 | converged in 12.5s | leading eval=-1.071005e-02+4.969910e-02j
+Lam=0.4539 | converged in 12.5s | leading eval=-8.999448e-03+4.790295e-02j
+Lam=0.4616 | converged in 12.6s | leading eval=-1.009027e-02+4.912032e-02j
+Lam=0.5081 | converged in 13.7s | leading eval=-2.451230e-02+5.175944e-02j
+Lam=0.4887 | converged in 14.0s | leading eval=-1.595101e-02+5.237785e-02j
+Lam=0.4965 | converged in 14.1s | leading eval=-1.860725e-02+5.266806e-02j
+Lam=0.4926 | converged in 14.2s | leading eval=-1.719550e-02+5.258517e-02j
+Lam=0.5042 | converged in 14.2s | leading eval=-2.215868e-02+5.230211e-02j
+Lam=0.5003 | converged in 14.3s | leading eval=-2.023519e-02+5.258914e-02j
+Lam=0.4694 | converged in 14.4s | leading eval=-1.138751e-02+5.025239e-02j
+Lam=0.4500 | converged in 14.5s | leading eval=-8.518112e-03+4.727082e-02j
+Lam=0.4732 | converged in 14.5s | leading eval=-1.212992e-02+5.077471e-02j
+Lam=0.4848 | converged in 14.5s | leading eval=-1.484178e-02+5.207448e-02j
+Lam=0.4810 | converged in 14.5s | leading eval=-1.384553e-02+5.169626e-02j
+Lam=0.4771 | converged in 14.5s | leading eval=-1.294583e-02+5.125903e-02j
+Lam=0.5119 | converged in 13.6s | leading eval=-2.752984e-02+5.094692e-02j
+Lam=0.5158 | converged in 13.6s | leading eval=-3.159886e-02+5.001655e-02j
+Lam=0.5235 | converged in 13.8s | leading eval=-3.619097e-02+3.866949e-03j
+Lam=0.5274 | converged in 13.6s | leading eval=-2.598661e-02+2.476112e-03j
+Lam=0.5313 | converged in 13.6s | leading eval=-1.855955e-02+1.493555e-03j
+Lam=0.5197 | converged in 15.2s | leading eval=-3.706016e-02+4.967805e-02j
+Lam=0.5352 | converged in 13.6s | leading eval=-1.310028e-02+8.899556e-04j
+Lam=0.5390 | converged in 13.5s | leading eval=-9.114044e-03+5.288947e-04j
+Lam=0.5468 | converged in 13.6s | leading eval=-4.287110e-03+1.634948e-04j
+Lam=0.5429 | converged in 13.6s | leading eval=-6.262569e-03+3.080476e-04j
+Lam=0.5506 | converged in 13.6s | leading eval=-2.981253e-03+5.675911e-05j
+Lam=0.5700 | converged in 13.5s | leading eval=-2.120830e-03-5.809852e-04j
+Lam=0.5661 | converged in 13.5s | leading eval=-1.778409e-03-3.915269e-04j
+Lam=0.5545 | converged in 13.6s | leading eval=-2.182256e-03-3.628892e-05j
+Lam=0.5584 | converged in 14.0s | leading eval=-1.767525e-03-1.327047e-04j
+Lam=0.5623 | converged in 14.3s | leading eval=-1.651044e-03-2.466485e-04j
+
+Total sweep time: 29.0s
+Data saved to Plots/Gap_Closure/Plot_data/eigenvalues_E_+-_i_N4_M80.npz
+Plot saved.

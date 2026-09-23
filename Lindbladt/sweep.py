@@ -15,16 +15,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 # --- Parameters ---
-N = 5
-M = 100
+N = 6
+M = 120
 wc = 1.0
 wa = 1.0
 kappa2 = 0.05
-target_sector = "E_+-_i"
+target_sector = "E_--_-1"
+core_nr = 8
 
 lam_min = 0.45
-lam_max = 0.65
-n_steps = 8
+lam_max = 0.57
+n_steps = 32
 lam_vals = np.linspace(lam_min, lam_max, n_steps)
 
 sigma = -1e-6 + 1e-8j  # fixed small offset, avoids landing exactly on zero
@@ -144,7 +145,7 @@ def _compute_eigenvalues(lam):
 
 
 if __name__ == "__main__":
-    n_workers = min(int(os.environ.get("SLURM_CPUS_PER_TASK", cpu_count())), 8)
+    n_workers = min(int(os.environ.get("SLURM_CPUS_PER_TASK", cpu_count())), core_nr)
     print(f"Starting sweep for sector: {target_sector} using {n_workers} workers")
     print(f"N={N}, M={M}, lambda range=[{lam_min}, {lam_max}], steps={n_steps}\n")
 

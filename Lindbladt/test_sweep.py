@@ -15,15 +15,15 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 # --- Parameters ---
-N = 5
-M = 120
+N = 4
+M = 100
 wc = 1.0
 wa = 1.0
 kappa2 = 0.05
-gam = 0.01
+gam = 0.05
 
 target_sector = "E_+-_i"
-core_nr = 16
+core_nr = 8
 
 lam_min = 0.3
 lam_max = 1.0

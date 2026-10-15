@@ -1,0 +1,229 @@
+QuTiP 5.3.1 | workers: 16 | parities: ['even', 'odd']
+N=15, M=200, lam=0.54, kappa2=0.05, t_max=70.0, n_traj/parity=500
+
+[worker 955274] ready, Hilbert dim = 3200
+[worker 955275] ready, Hilbert dim = 3200
+[worker 955276] ready, Hilbert dim = 3200
+[worker 955277] ready, Hilbert dim = 3200
+[worker 955278] ready, Hilbert dim = 3200
+[worker 955279] ready, Hilbert dim = 3200
+[worker 955281] ready, Hilbert dim = 3200
+[worker 955280] ready, Hilbert dim = 3200
+[worker 955282] ready, Hilbert dim = 3200
+[worker 955283] ready, Hilbert dim = 3200
+[worker 955284] ready, Hilbert dim = 3200
+[worker 955285] ready, Hilbert dim = 3200
+[worker 955286] ready, Hilbert dim = 3200
+[worker 955288] ready, Hilbert dim = 3200
+[worker 955287] ready, Hilbert dim = 3200
+[worker 955289] ready, Hilbert dim = 3200
+[worker 955282] even chunk 8: 8 traj in 58.1s
+[worker 955286] even chunk 13: 8 traj in 58.5s
+[worker 955284] even chunk 10: 8 traj in 58.8s
+--> even: 8/500 trajectories (59s elapsed)
+--> even: 16/500 trajectories (59s elapsed)
+[worker 955288] even chunk 12: 8 traj in 59.6s
+--> even: 24/500 trajectories (60s elapsed)
+--> even: 32/500 trajectories (61s elapsed)
+[worker 955277] even chunk 3: 8 traj in 62.4s
+--> even: 40/500 trajectories (63s elapsed)
+[worker 955283] even chunk 9: 8 traj in 66.0s
+[worker 955280] even chunk 7: 8 traj in 66.5s
+[worker 955279] even chunk 5: 8 traj in 66.6s
+--> even: 48/500 trajectories (67s elapsed)
+--> even: 56/500 trajectories (67s elapsed)
+--> even: 64/500 trajectories (68s elapsed)
+[worker 955287] even chunk 14: 8 traj in 68.6s
+[worker 955285] even chunk 11: 8 traj in 68.6s
+--> even: 72/500 trajectories (69s elapsed)
+[worker 955278] even chunk 4: 8 traj in 69.6s
+--> even: 80/500 trajectories (70s elapsed)
+[worker 955289] even chunk 6: 8 traj in 70.0s
+[worker 955276] even chunk 2: 8 traj in 70.2s
+--> even: 88/500 trajectories (70s elapsed)
+--> even: 96/500 trajectories (71s elapsed)
+--> even: 104/500 trajectories (71s elapsed)
+[worker 955275] even chunk 1: 8 traj in 72.9s
+--> even: 112/500 trajectories (74s elapsed)
+[worker 955281] even chunk 15: 8 traj in 74.3s
+--> even: 120/500 trajectories (75s elapsed)
+[worker 955274] even chunk 0: 8 traj in 75.0s
+--> even: 128/500 trajectories (76s elapsed)
+[worker 955286] even chunk 17: 8 traj in 50.4s
+--> even: 136/500 trajectories (110s elapsed)
+[worker 955276] even chunk 28: 8 traj in 45.1s
+--> even: 144/500 trajectories (117s elapsed)
+[worker 955282] even chunk 16: 8 traj in 63.6s
+--> even: 152/500 trajectories (123s elapsed)
+[worker 955283] even chunk 21: 8 traj in 57.1s
+--> even: 160/500 trajectories (124s elapsed)
+[worker 955285] even chunk 25: 8 traj in 54.9s
+--> even: 168/500 trajectories (125s elapsed)
+[worker 955277] even chunk 20: 8 traj in 62.1s
+--> even: 176/500 trajectories (126s elapsed)
+[worker 955284] even chunk 18: 8 traj in 66.7s
+[worker 955279] even chunk 23: 8 traj in 58.9s
+[worker 955287] even chunk 24: 8 traj in 57.5s
+--> even: 184/500 trajectories (127s elapsed)
+--> even: 192/500 trajectories (128s elapsed)
+--> even: 200/500 trajectories (128s elapsed)
+[worker 955280] even chunk 22: 8 traj in 61.6s
+--> even: 208/500 trajectories (129s elapsed)
+[worker 955274] even chunk 31: 8 traj in 55.5s
+--> even: 216/500 trajectories (132s elapsed)
+[worker 955288] even chunk 19: 8 traj in 71.6s
+--> even: 224/500 trajectories (133s elapsed)
+[worker 955281] even chunk 30: 8 traj in 60.3s
+--> even: 232/500 trajectories (136s elapsed)
+[worker 955289] even chunk 27: 8 traj in 69.8s
+--> even: 240/500 trajectories (141s elapsed)
+[worker 955275] even chunk 29: 8 traj in 68.7s
+--> even: 248/500 trajectories (143s elapsed)
+[worker 955278] even chunk 26: 8 traj in 75.5s
+--> even: 256/500 trajectories (146s elapsed)
+[worker 955286] even chunk 32: 8 traj in 61.1s
+--> even: 264/500 trajectories (172s elapsed)
+[worker 955276] even chunk 33: 8 traj in 63.2s
+--> even: 272/500 trajectories (181s elapsed)
+[worker 955277] even chunk 37: 8 traj in 56.7s
+--> even: 280/500 trajectories (183s elapsed)
+[worker 955279] even chunk 39: 8 traj in 60.9s
+--> even: 288/500 trajectories (189s elapsed)
+[worker 955288] even chunk 43: 8 traj in 56.9s
+--> even: 296/500 trajectories (190s elapsed)
+[worker 955282] even chunk 34: 8 traj in 67.4s
+[worker 955287] even chunk 40: 8 traj in 62.0s
+[worker 955284] even chunk 38: 8 traj in 63.2s
+--> even: 304/500 trajectories (191s elapsed)
+--> even: 312/500 trajectories (191s elapsed)
+--> even: 320/500 trajectories (192s elapsed)
+[worker 955275] even chunk 46: 8 traj in 52.5s
+--> even: 328/500 trajectories (196s elapsed)
+[worker 955278] even chunk 47: 8 traj in 51.3s
+--> even: 336/500 trajectories (198s elapsed)
+[worker 955274] even chunk 42: 8 traj in 67.0s
+--> even: 344/500 trajectories (199s elapsed)
+[worker 955285] even chunk 36: 8 traj in 74.2s
+--> even: 352/500 trajectories (200s elapsed)
+[worker 955283] even chunk 35: 8 traj in 75.9s
+[worker 955281] even chunk 44: 8 traj in 65.0s
+--> even: 360/500 trajectories (201s elapsed)
+--> even: 368/500 trajectories (201s elapsed)
+[worker 955280] even chunk 41: 8 traj in 73.9s
+--> even: 376/500 trajectories (204s elapsed)
+[worker 955289] even chunk 45: 8 traj in 67.5s
+--> even: 384/500 trajectories (209s elapsed)
+[worker 955278] even chunk 57: 7 traj in 45.2s
+--> even: 391/500 trajectories (244s elapsed)
+[worker 955279] even chunk 51: 8 traj in 55.7s
+[worker 955277] even chunk 50: 8 traj in 62.4s
+--> even: 399/500 trajectories (245s elapsed)
+--> even: 407/500 trajectories (246s elapsed)
+[worker 955286] even chunk 48: 8 traj in 76.4s
+--> even: 415/500 trajectories (249s elapsed)
+[worker 955282] even chunk 53: 7 traj in 59.0s
+--> even: 422/500 trajectories (250s elapsed)
+[worker 955275] even chunk 56: 7 traj in 57.6s
+[worker 955283] even chunk 60: 7 traj in 52.8s
+--> even: 429/500 trajectories (254s elapsed)
+--> even: 436/500 trajectories (255s elapsed)
+[worker 955284] even chunk 55: 7 traj in 65.1s
+[worker 955281] even chunk 61: 7 traj in 56.0s
+[worker 955276] even chunk 49: 8 traj in 76.8s
+--> even: 443/500 trajectories (258s elapsed)
+--> even: 450/500 trajectories (258s elapsed)
+[worker 955287] even chunk 54: 7 traj in 66.9s
+--> even: 458/500 trajectories (259s elapsed)
+[worker 955288] even chunk 52: 7 traj in 69.0s
+[worker 955274] even chunk 58: 7 traj in 59.9s
+--> even: 465/500 trajectories (259s elapsed)
+--> even: 472/500 trajectories (260s elapsed)
+--> even: 479/500 trajectories (260s elapsed)
+[worker 955285] even chunk 59: 7 traj in 64.8s
+--> even: 486/500 trajectories (265s elapsed)
+[worker 955289] even chunk 63: 7 traj in 56.7s
+--> even: 493/500 trajectories (266s elapsed)
+[worker 955280] even chunk 62: 7 traj in 71.9s
+--> even: 500/500 trajectories (276s elapsed)
+[worker 955277] odd chunk 2: 8 traj in 56.0s
+--> odd: 8/500 trajectories (303s elapsed)
+[worker 955283] odd chunk 6: 8 traj in 56.0s
+--> odd: 16/500 trajectories (311s elapsed)
+[worker 955278] odd chunk 0: 8 traj in 68.8s
+[worker 955279] odd chunk 1: 8 traj in 67.7s
+--> odd: 24/500 trajectories (313s elapsed)
+--> odd: 32/500 trajectories (314s elapsed)
+[worker 955275] odd chunk 5: 8 traj in 62.9s
+--> odd: 40/500 trajectories (318s elapsed)
+[worker 955284] odd chunk 7: 8 traj in 62.7s
+--> odd: 48/500 trajectories (321s elapsed)
+[worker 955288] odd chunk 11: 8 traj in 61.4s
+--> odd: 56/500 trajectories (322s elapsed)
+[worker 955286] odd chunk 3: 8 traj in 73.6s
+--> odd: 64/500 trajectories (323s elapsed)
+[worker 955281] odd chunk 8: 8 traj in 64.7s
+--> odd: 72/500 trajectories (323s elapsed)
+[worker 955282] odd chunk 4: 8 traj in 75.8s
+[worker 955287] odd chunk 10: 8 traj in 67.0s
+--> odd: 80/500 trajectories (327s elapsed)
+--> odd: 88/500 trajectories (327s elapsed)
+[worker 955285] odd chunk 13: 8 traj in 62.5s
+--> odd: 96/500 trajectories (328s elapsed)
+[worker 955276] odd chunk 9: 8 traj in 72.2s
+--> odd: 104/500 trajectories (331s elapsed)
+[worker 955280] odd chunk 15: 8 traj in 62.6s
+--> odd: 112/500 trajectories (339s elapsed)
+[worker 955289] odd chunk 14: 8 traj in 74.1s
+--> odd: 120/500 trajectories (341s elapsed)
+[worker 955274] odd chunk 12: 8 traj in 81.4s
+--> odd: 128/500 trajectories (342s elapsed)
+[worker 955275] odd chunk 20: 8 traj in 52.5s
+--> odd: 136/500 trajectories (371s elapsed)
+[worker 955277] odd chunk 16: 8 traj in 69.0s
+--> odd: 144/500 trajectories (372s elapsed)
+[worker 955283] odd chunk 17: 8 traj in 64.6s
+--> odd: 152/500 trajectories (376s elapsed)
+[worker 955284] odd chunk 21: 8 traj in 58.1s
+--> odd: 160/500 trajectories (380s elapsed)
+[worker 955279] odd chunk 19: 8 traj in 67.8s
+--> odd: 168/500 trajectories (382s elapsed)
+[worker 955278] odd chunk 18: 8 traj in 71.9s
+--> odd: 176/500 trajectories (386s elapsed)
+[worker 955282] odd chunk 25: 8 traj in 59.9s
+--> odd: 184/500 trajectories (387s elapsed)
+[worker 955286] odd chunk 23: 8 traj in 66.6s
+--> odd: 192/500 trajectories (390s elapsed)
+[worker 955288] odd chunk 22: 8 traj in 71.7s
+--> odd: 200/500 trajectories (394s elapsed)
+[worker 955287] odd chunk 26: 8 traj in 66.7s
+--> odd: 208/500 trajectories (395s elapsed)
+[worker 955285] odd chunk 27: 8 traj in 69.5s
+--> odd: 216/500 trajectories (398s elapsed)
+[worker 955280] odd chunk 29: 8 traj in 65.4s
+[worker 955289] odd chunk 30: 8 traj in 63.9s
+[worker 955274] odd chunk 31: 8 traj in 62.9s
+--> odd: 224/500 trajectories (405s elapsed)
+--> odd: 232/500 trajectories (406s elapsed)
+--> odd: 240/500 trajectories (406s elapsed)
+[worker 955276] odd chunk 28: 8 traj in 76.6s
+--> odd: 248/500 trajectories (409s elapsed)
+[worker 955281] odd chunk 24: 8 traj in 85.5s
+--> odd: 256/500 trajectories (409s elapsed)
+[worker 955283] odd chunk 34: 8 traj in 57.0s
+--> odd: 264/500 trajectories (434s elapsed)
+[worker 955277] odd chunk 33: 8 traj in 67.2s
+--> odd: 272/500 trajectories (440s elapsed)
+[worker 955275] odd chunk 32: 8 traj in 72.2s
+--> odd: 280/500 trajectories (443s elapsed)
+[worker 955284] odd chunk 35: 8 traj in 65.7s
+--> odd: 288/500 trajectories (446s elapsed)
+[worker 955282] odd chunk 38: 8 traj in 59.9s
+--> odd: 296/500 trajectories (448s elapsed)
+[worker 955278] odd chunk 37: 8 traj in 64.9s
+--> odd: 304/500 trajectories (451s elapsed)
+[worker 955286] odd chunk 39: 8 traj in 62.1s
+[worker 955279] odd chunk 36: 8 traj in 70.3s
+--> odd: 312/500 trajectories (452s elapsed)
+--> odd: 320/500 trajectories (453s elapsed)
+[worker 955287] odd chunk 41: 8 traj in 62.1s
+--> odd: 328/500 trajectories (457s elapsed)

@@ -1,0 +1,19 @@
+QuTiP 5.3.1 | workers: 16 | parities: ['even', 'odd']
+N=15, M=250, lam=0.6, kappa2=0.05, t_max=70.0, n_traj/parity=500
+
+[worker 4001094] ready, Hilbert dim = 4000
+[worker 4001095] ready, Hilbert dim = 4000
+[worker 4001096] ready, Hilbert dim = 4000
+[worker 4001097] ready, Hilbert dim = 4000
+[worker 4001098] ready, Hilbert dim = 4000
+[worker 4001099] ready, Hilbert dim = 4000
+[worker 4001100] ready, Hilbert dim = 4000
+[worker 4001101] ready, Hilbert dim = 4000
+[worker 4001102] ready, Hilbert dim = 4000
+[worker 4001103] ready, Hilbert dim = 4000
+[worker 4001104] ready, Hilbert dim = 4000
+[worker 4001105] ready, Hilbert dim = 4000
+[worker 4001106] ready, Hilbert dim = 4000
+[worker 4001107] ready, Hilbert dim = 4000
+[worker 4001108] ready, Hilbert dim = 4000
+[worker 4001109] ready, Hilbert dim = 4000

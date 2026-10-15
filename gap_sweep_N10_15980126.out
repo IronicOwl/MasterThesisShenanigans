@@ -1,0 +1,103 @@
+Starting sweep for sector: E_+-_i using 8 workers
+N=4, M=100, lambda range=[0.3, 1.0], steps=80
+
+[worker 3745555] initializing...
+[worker 3745556] initializing...
+[worker 3745557] initializing...
+[worker 3745559] initializing...
+[worker 3745558] initializing...
+[worker 3745560] initializing...
+[worker 3745561] initializing...
+[worker 3745562] initializing...
+[worker 3745557] ready. Block size: 31250
+[worker 3745555] ready. Block size: 31250
+[worker 3745556] ready. Block size: 31250
+[worker 3745560] ready. Block size: 31250
+[worker 3745561] ready. Block size: 31250
+[worker 3745562] ready. Block size: 31250
+[worker 3745559] ready. Block size: 31250
+[worker 3745558] ready. Block size: 31250
+Lam=0.4063 | converged in 12.7s | leading eval=-2.687259e-03+3.905288e-02j
+Lam=0.4595 | converged in 12.8s | leading eval=-4.015734e-03+4.957003e-02j
+Lam=0.3532 | converged in 13.1s | leading eval=-1.796339e-03+2.962647e-02j
+Lam=0.4329 | converged in 14.6s | leading eval=-3.281969e-03+4.418832e-02j
+Lam=0.3797 | converged in 14.8s | leading eval=-2.199761e-03+3.419236e-02j
+Lam=0.3266 | converged in 14.9s | leading eval=-1.459950e-03+2.536884e-02j
+Lam=0.4861 | converged in 14.9s | leading eval=-4.933066e-03+5.515617e-02j
+Lam=0.3000 | converged in 15.0s | leading eval=-1.177866e-03+2.142889e-02j
+Lam=0.4152 | converged in 12.2s | leading eval=-2.872221e-03+4.073535e-02j
+Lam=0.3620 | converged in 12.1s | leading eval=-1.922626e-03+3.111475e-02j
+Lam=0.4684 | converged in 12.3s | leading eval=-4.298450e-03+5.141192e-02j
+Lam=0.4418 | converged in 14.2s | leading eval=-3.509217e-03+4.595660e-02j
+Lam=0.4949 | converged in 14.1s | leading eval=-5.289873e-03+5.705372e-02j
+Lam=0.3886 | converged in 14.2s | leading eval=-2.351922e-03+3.578062e-02j
+Lam=0.3354 | converged in 14.2s | leading eval=-1.565491e-03+2.675315e-02j
+Lam=0.3089 | converged in 14.3s | leading eval=-1.266508e-03+2.270646e-02j
+Lam=0.4241 | converged in 12.6s | leading eval=-3.070069e-03+4.244751e-02j
+Lam=0.3709 | converged in 12.6s | leading eval=-2.056892e-03+3.263688e-02j
+Lam=0.4772 | converged in 12.7s | leading eval=-4.603459e-03+5.327471e-02j
+Lam=0.3975 | converged in 13.2s | leading eval=-2.514139e-03+3.740104e-02j
+Lam=0.4506 | converged in 14.4s | leading eval=-3.753264e-03+4.775102e-02j
+Lam=0.5038 | converged in 14.3s | leading eval=-5.676816e-03+5.896447e-02j
+Lam=0.3443 | converged in 14.3s | leading eval=-1.677465e-03+2.817247e-02j
+Lam=0.3177 | converged in 14.4s | leading eval=-1.360418e-03+2.401986e-02j
+Lam=0.5127 | converged in 12.6s | leading eval=-6.097222e-03+6.088509e-02j
+Lam=0.5658 | converged in 12.6s | leading eval=-9.574182e-03+7.235835e-02j
+Lam=0.5392 | converged in 14.2s | leading eval=-7.599572e-03+6.666515e-02j
+Lam=0.5924 | converged in 12.3s | leading eval=-1.222106e-02+7.775328e-02j
+Lam=0.6190 | converged in 15.8s | leading eval=-1.584877e-02+8.252132e-02j
+Lam=0.6722 | converged in 15.7s | leading eval=-2.814083e-02+8.797991e-02j
+Lam=0.6456 | converged in 15.8s | leading eval=-2.093646e-02+8.617973e-02j
+Lam=0.6987 | converged in 15.9s | leading eval=-3.842785e-02+8.670419e-02j
+Lam=0.5215 | converged in 12.4s | leading eval=-6.554863e-03+6.281175e-02j
+Lam=0.5747 | converged in 12.5s | leading eval=-1.036936e-02+7.420310e-02j
+Lam=0.5481 | converged in 14.2s | leading eval=-8.197069e-03+6.858112e-02j
+Lam=0.6013 | converged in 13.0s | leading eval=-1.330158e-02+7.943287e-02j
+Lam=0.7076 | converged in 13.8s | leading eval=-4.275921e-02+8.529946e-02j
+Lam=0.6544 | converged in 14.3s | leading eval=-2.306276e-02+8.703597e-02j
+Lam=0.6278 | converged in 15.7s | leading eval=-1.735398e-02+8.389284e-02j
+Lam=0.6810 | converged in 15.8s | leading eval=-3.116919e-02+8.797214e-02j
+Lam=0.5304 | converged in 12.7s | leading eval=-7.054021e-03+6.474011e-02j
+Lam=0.5835 | converged in 12.7s | leading eval=-1.124796e-02+7.600540e-02j
+Lam=0.5570 | converged in 13.8s | leading eval=-8.852855e-03+7.048140e-02j
+Lam=0.6101 | converged in 14.3s | leading eval=-1.450481e-02+8.102817e-02j
+Lam=0.7165 | converged in 12.6s | leading eval=-4.763196e-02+8.326543e-02j
+Lam=0.7253 | converged in 12.7s | leading eval=-5.310534e-02+8.049715e-02j
+Lam=0.7519 | converged in 12.7s | leading eval=-7.379156e-02+6.631683e-02j
+Lam=0.6367 | converged in 14.4s | leading eval=-1.904223e-02+8.512109e-02j
+Lam=0.6633 | converged in 15.7s | leading eval=-2.545220e-02+8.765090e-02j
+Lam=0.6899 | converged in 14.4s | leading eval=-3.458198e-02+8.756927e-02j
+Lam=0.7785 | converged in 15.7s | leading eval=-9.894068e-02+3.530899e-02j
+Lam=0.8051 | converged in 15.7s | leading eval=-1.156011e-01+7.753298e-03j
+Lam=0.8316 | converged in 14.0s | leading eval=-1.549123e-01+5.400524e-02j
+Lam=0.7342 | converged in 12.7s | leading eval=-5.924256e-02+7.686849e-02j
+Lam=0.7608 | converged in 14.0s | leading eval=-8.233661e-02+5.875760e-02j
+Lam=0.9114 | converged in 15.7s | leading eval=-1.534690e-02+2.995332e-02j
+Lam=0.8848 | converged in 15.8s | leading eval=-2.447984e-02+5.412201e-02j
+Lam=0.8582 | converged in 15.9s | leading eval=-5.367235e-02+9.882203e-02j
+Lam=0.7873 | converged in 14.2s | leading eval=-1.029507e-01+2.296236e-02j
+Lam=0.7430 | converged in 12.5s | leading eval=-6.611264e-02+7.221865e-02j
+Lam=0.8139 | converged in 15.9s | leading eval=-1.291105e-01+5.194043e-03j
+Lam=0.8405 | converged in 15.9s | leading eval=-1.090833e-01+1.681275e-01j
+Lam=0.7696 | converged in 13.6s | leading eval=-9.149260e-02+4.866574e-02j
+Lam=0.8937 | converged in 15.5s | leading eval=-2.035917e-02+4.438212e-02j
+Lam=0.9203 | converged in 15.6s | leading eval=-1.375599e-02+2.466775e-02j
+Lam=0.8671 | converged in 15.7s | leading eval=-3.956384e-02+8.064353e-02j
+Lam=0.7962 | converged in 14.4s | leading eval=-1.076148e-01+1.395132e-02j
+Lam=0.9380 | converged in 13.8s | leading eval=-1.150403e-02+1.682047e-02j
+Lam=0.8228 | converged in 15.8s | leading eval=-1.516104e-01+1.066240e-02j
+Lam=0.9646 | converged in 13.8s | leading eval=-9.314001e-03+9.590292e-03j
+Lam=0.8494 | converged in 15.8s | leading eval=-7.670455e-02+1.235830e-01j
+Lam=0.9025 | converged in 14.1s | leading eval=-1.745750e-02+3.643397e-02j
+Lam=0.9291 | converged in 14.6s | leading eval=-1.251183e-02+2.035158e-02j
+Lam=0.8759 | converged in 14.7s | leading eval=-3.050393e-02+6.604132e-02j
+Lam=0.9911 | converged in 13.7s | leading eval=-7.851799e-03+5.574300e-03j
+Lam=0.9468 | converged in 12.6s | leading eval=-1.066216e-02+1.392551e-02j
+Lam=0.9734 | converged in 12.6s | leading eval=-8.762572e-03+7.979379e-03j
+Lam=1.0000 | converged in 12.9s | leading eval=-7.482324e-03+4.702496e-03j
+Lam=0.9557 | converged in 11.5s | leading eval=-9.941495e-03+1.154721e-02j
+Lam=0.9823 | converged in 11.9s | leading eval=-8.277141e-03+6.655653e-03j
+
+Total sweep time: 154.6s
+Data saved to Plots/Gap_Closure/Plot_data/eigenvalues_E_+-_i_N4_M100_test.npz
+Plot saved.

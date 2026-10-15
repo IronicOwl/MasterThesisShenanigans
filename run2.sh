@@ -12,4 +12,4 @@ module load stack/2025-06 gcc/8.5.0
 module load python/3.11.9
 source .venv/bin/activate
 
-time python Lindbladt/sweep.py
+time python Lindbladt/test_sweep.py

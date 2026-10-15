@@ -64,7 +64,7 @@ def parse_args():
     p.add_argument("--wigner_points", type=int, default=200)
     p.add_argument("--no_full_rho", action="store_true",
                    help="do not save the full (cavity x spin) density matrix")
-    p.add_argument("--outdir", default=os.path.join("Plots", "Two_photon_dicke_2p_jump"))
+    p.add_argument("--outdir", default=os.path.join("Plots", "Tpdt_SC"))
     return p.parse_args()
 
 

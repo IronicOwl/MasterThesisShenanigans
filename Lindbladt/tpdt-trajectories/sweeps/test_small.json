@@ -1,0 +1,21 @@
+{
+  "tag": "pipeline_test",
+  "outdir": "results",
+  "common": {
+    "kappa2": 0.05,
+    "t_max": 40,
+    "n_t": 81,
+    "n_traj": 64
+  },
+  "systems": [
+    {"N": 6, "M": 80}
+  ],
+  "lam": [0.53, 0.8],
+  "slurm": {
+    "cpus_per_task": 8,
+    "time": "01:00:00",
+    "mem_per_cpu": "1G",
+    "max_parallel": 2,
+    "extra": []
+  }
+}

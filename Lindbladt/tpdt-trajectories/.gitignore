@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+logs/
+jobs/
+*.tmp.npz
+*.json.tmp
+.ipynb_checkpoints/

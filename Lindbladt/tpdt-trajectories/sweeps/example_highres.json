@@ -1,0 +1,29 @@
+{
+  "tag": "highres_v1",
+  "outdir": "results",
+  "common": {
+    "kappa2": 0.05,
+    "wc": 1.0,
+    "wa": 1.0,
+    "t_max": 70,
+    "n_t": 141,
+    "n_traj": 2000
+  },
+  "systems": [
+    {"N": 10, "M": "auto"},
+    {"N": 15, "M": "auto"},
+    {"N": 20, "M": "auto"},
+    {"N": 30, "M": "auto"}
+  ],
+  "lam": [0.50, 0.51, 0.52, 0.53, 0.54, 0.55, 0.57, 0.60],
+  "seed": 1,
+  "chunks": 1,
+  "split_sectors": false,
+  "slurm": {
+    "cpus_per_task": 32,
+    "time": "24:00:00",
+    "mem_per_cpu": "1G",
+    "max_parallel": 20,
+    "extra": []
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "tag": "cutoff_check",
+  "outdir": "results",
+  "common": {
+    "kappa2": 0.05,
+    "t_max": 70,
+    "n_traj": 2000,
+    "init_nmax": 150
+  },
+  "systems": [
+    {"N": 15, "M": "auto", "M_factor": 1.6},
+    {"N": 15, "M": "auto", "M_factor": 2.2}
+  ],
+  "lam": [0.53, 0.55, 0.60],
+  "slurm": {
+    "cpus_per_task": 32,
+    "time": "12:00:00",
+    "mem_per_cpu": "1G",
+    "max_parallel": 10,
+    "extra": []
+  }
+}

@@ -15,16 +15,17 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 # --- Parameters ---
-N = 10
+N = 6
 M = 120
 wc = 1.0
 wa = 1.0
 kappa2 = 0.05
-target_sector = "E_+-_i"
+target_sector = "E_--_-1"
+core_nr = 8
 
 lam_min = 0.45
-lam_max = 0.65
-n_steps = 8
+lam_max = 0.57
+n_steps = 32
 lam_vals = np.linspace(lam_min, lam_max, n_steps)
 
 sigma = -1e-6 + 1e-8j  # fixed small offset, avoids landing exactly on zero
@@ -144,7 +145,7 @@ def _compute_eigenvalues(lam):
 
 
 if __name__ == "__main__":
-    n_workers = min(int(os.environ.get("SLURM_CPUS_PER_TASK", cpu_count())), 8)
+    n_workers = min(int(os.environ.get("SLURM_CPUS_PER_TASK", cpu_count())), core_nr)
     print(f"Starting sweep for sector: {target_sector} using {n_workers} workers")
     print(f"N={N}, M={M}, lambda range=[{lam_min}, {lam_max}], steps={n_steps}\n")
 
@@ -163,10 +164,16 @@ if __name__ == "__main__":
     all_evals = np.array([r[1] for r in results])
     leading_evals = all_evals[:, 0]
 
-    filename = f'Plots\Gap_Closure\Plot_data\eigenvalues_{target_sector}_N{N}_M{M}.npz'
+    outdir = os.path.join('Plots', 'Gap_Closure', 'Plot_data')
+    os.makedirs(outdir, exist_ok=True)
+    filename = os.path.join(outdir, f'eigenvalues_{target_sector}_N{N}_M{M}.npz')
     np.savez(filename, lam_vals=lam_out, leading_evals=leading_evals,
              all_evals=all_evals)
     print(f"Data saved to {filename}")
+    
+    outdir2 = os.path.join('Plots', 'Gap_Closure')
+    os.makedirs(outdir2, exist_ok=True)
+    plotname = os.path.join(outdir2, f'gap_{target_sector}_N{N}_M{M}.png')
 
     plt.figure(figsize=(8, 5))
     plt.plot(lam_out, -np.real(leading_evals), 'b.-', markersize=8)
@@ -178,5 +185,5 @@ if __name__ == "__main__":
     plt.grid(True, which="both", ls="--", alpha=0.5)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f'Plots\Gap_Closure\gap_{target_sector}_N{N}_M{M}.png', dpi=150)
+    plt.savefig(plotname, dpi=150)
     print("Plot saved.")

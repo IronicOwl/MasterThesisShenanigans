@@ -90,6 +90,7 @@ def _worker_init(cfg_dict: dict, sector: str):
         "rtol": cfg.rtol,
         "nsteps": cfg.nsteps,
         "progress_bar": False,
+        "norm_t_tol": 1e-9,
     }
     solver = qt.MCSolver(model.H, model.c_ops, options=options)
     _W.clear()
@@ -336,7 +337,7 @@ def run_sector(cfg: RunConfig, sector: str, point_dir: Path, workers: int = 1,
                           initargs=(cfg.to_dict(), sector)) as pool:
                 for batch_id, res in pool.imap_unordered(_run_batch, tasks, chunksize=1):
                     handle(batch_id, res)
-    except (KeyboardInterrupt, Interrupted):
+    except BaseException:
         st["wall_seconds"] = wall0 + (time.time() - t_start)
         save_raw(path, st, cfg, sector, model.fock, tlist, workers)
         log(f"[{sector}] interrupted: checkpoint with {st['n_done']} trajectories saved to {path};"

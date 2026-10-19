@@ -1,0 +1,103 @@
+{
+  "physics_key": {
+    "N": 15,
+    "M": 200,
+    "lam": 0.54,
+    "kappa2": 0.05,
+    "wc": 1.0,
+    "wa": 1.0,
+    "t_max": 70.0,
+    "n_t": 141,
+    "init": "infinite_temperature",
+    "init_nmax": 75,
+    "method": "vern7",
+    "atol": 1e-08,
+    "rtol": 1e-06
+  },
+  "updated": "2026-10-18T13:40:38",
+  "wigner": {
+    "x_max": 23.0,
+    "n_grid": 201,
+    "g": "sqrt(2) (qutip default)"
+  },
+  "sectors": {
+    "even": {
+      "n_traj": 2000,
+      "seeds": [
+        1
+      ],
+      "n_traj_per_seed": [
+        2000
+      ],
+      "trace_before_renorm": 1.0,
+      "n_mean": 99.91171877175024,
+      "n_mean_se": 0.9551893711042895,
+      "n_over_N": 6.660781251450016,
+      "n_over_N_se": 0.06367929140695264,
+      "var_n": 2002.8576103102077,
+      "mandel_Q": 19.04627319930072,
+      "Jz_over_N": -0.15781928670859088,
+      "Jx2_over_N2": 0.900690591289774,
+      "a4_over_N2": [
+        37.519670700320354,
+        37.184274234932886
+      ],
+      "abs_a4_over_N2_traj_mean": 53.04102040801992,
+      "Jx_a2_over_N2": [
+        -6.15942936387886,
+        -2.455193173070244
+      ],
+      "tail_start": 180,
+      "tail_weight": 0.001625019305330608,
+      "truncation_ok": false,
+      "relax_drift_n_last20pct": 1.5844003951543328,
+      "relax_drift_sigma": 1.1494881013213918,
+      "relaxation_ok": true,
+      "compute_core_hours": 2.4476865040593676,
+      "wigner_min": -0.1027553243572659,
+      "wigner_max": 0.3183098861837656,
+      "wigner_negativity_volume": 0.11790520054273831
+    },
+    "odd": {
+      "n_traj": 2000,
+      "seeds": [
+        1
+      ],
+      "n_traj_per_seed": [
+        2000
+      ],
+      "trace_before_renorm": 1.0,
+      "n_mean": 98.7876849524484,
+      "n_mean_se": 0.9958988154066727,
+      "n_over_N": 6.58584566349656,
+      "n_over_N_se": 0.06639325436044484,
+      "var_n": 2159.0220090985204,
+      "mandel_Q": 20.85517364981039,
+      "Jz_over_N": -0.17963048154496014,
+      "Jx2_over_N2": 0.8819845707863974,
+      "a4_over_N2": [
+        37.187564146945775,
+        37.07202299812647
+      ],
+      "abs_a4_over_N2_traj_mean": 52.73450984603944,
+      "Jx_a2_over_N2": [
+        -6.07928225628413,
+        -2.4338544645872258
+      ],
+      "tail_start": 180,
+      "tail_weight": 0.0015941893236325363,
+      "truncation_ok": false,
+      "relax_drift_n_last20pct": 3.076318915637458,
+      "relax_drift_sigma": 2.1328293382810153,
+      "relaxation_ok": true,
+      "compute_core_hours": 2.4316828760173586,
+      "wigner_min": -0.3183098861837656,
+      "wigner_max": 0.1087010568478707,
+      "wigner_negativity_volume": 0.12038037345162593
+    }
+  },
+  "warnings": [
+    "even: P(n >= 180) = 1.63e-03 > 0.001 -> increase M",
+    "odd: P(n >= 180) = 1.59e-03 > 0.001 -> increase M"
+  ]
+}

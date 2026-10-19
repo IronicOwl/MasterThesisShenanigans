@@ -22,17 +22,27 @@ What the script does, for every system size N in a list:
   1. builds the Liouvillian with QuTiP and cuts it into the 8 symmetry blocks;
   2. in every block computes the few slowest right AND left eigenmodes
      (shift-invert around 0, sparse LU with a nested-dissection ordering);
-  3. removes the vacuum (normal-phase) part of the bistable steady state by
-     projecting onto the superradiant basin  n >= n_cut  in Fock space;
-  4. superimposes the weak-Z4 partner blocks (+1 with -1, +i with -i) so that
-     the two compass qubits A and B are separated;
-  5. runs the Lieu et al. NS test on each qubit (z-matrices, trace distances,
-     purity) plus the conserved-quantity (left eigenvector) test;
-  6. quantifies how the two qubits relate (direct sum vs. coherent, overlap,
+  3. CUT-FREE NS TEST (primary result, section 4b): builds the operators of
+     each compass qubit by projecting qubit-like states onto the slow
+     manifold with the left eigenvectors, P(X) = sum_k r_k <l_k, X> (Lieu et
+     al.'s quench protocol evaluated exactly).  The vacuum is removed by the
+     dynamics itself (slow vacuum<->SR switching mode), not by a Fock cut.
+     The Lieu test is then reported (a) for the full metastable qubit state,
+     (b) for its dominant auxiliary states, (c) for its committed basin, with
+     the incoherent weight and eps = slow rate / next rate.  For (b) the
+     coherence block z_eo is also broken down (diagonal mismatch, largest
+     off-diagonal element) and D_t(z_ee,z_eo) is divided by the decay rate
+     of the logical coherence (a decaying mode cannot be exactly NS-shaped);
+  4. OLD METHOD, kept for comparison: removes the vacuum by projecting onto
+     n >= n_cut in Fock space and superimposes the weak-Z4 partner blocks
+     (+1 with -1, +i with -i) by a support condition; Lieu test on that;
+  5. quantifies how the two qubits relate (direct sum vs. coherent, overlap,
      Z4 map, which-qubit classical bit, decoherence of inter-qubit coherence).
 
 Results go into ONE flat folder (OUTDIR): one .npz per N, a text summary and
-a handful of figures.  Run `python ns_compass.py --help` for options.
+a handful of figures.  File names carry lam and kappa2, plus wc and wa when
+these differ from the defaults (e.g. '..._wa0.250' for the low-leak control
+run with --wa 0.25).  Run `python ns_compass.py --help` for options.
 The accompanying PDF explains the method in detail.
 """
 
@@ -654,16 +664,214 @@ def dephasing_rate(c, u, v):
                  - np.real(np.vdot(u, cu) * np.conj(np.vdot(v, cv))))
 
 
+# ===========================================================================
+# 4b. CUT-FREE ISOLATION OF THE QUBITS: PROJECTION ONTO THE SLOW MANIFOLD
+# ===========================================================================
+# The Fock-space cut n >= n_cut (above) removes the low-photon part of the
+# slow modes by hand.  The functions below avoid any cut: they build the
+# qubit-A operators from the dynamics itself, with the LEFT eigenvectors.
+SWITCH_FRACTION = 0.2   # E_mumu^{+1} modes slower than SWITCH_FRACTION x (next
+                        # rate) are kept as vacuum<->SR switching modes
+COMMITTOR_MIN = 0.8     # "committed basin" of a qubit: states whose committor
+                        # (normalised which-qubit observable) exceeds this
+
+
+def paired_left(res, b, k):
+    """Left eigenvector belonging to right eigenvector k of block b."""
+    j = int(np.argmin(np.abs(res[b]["lamL"] - res[b]["lam"][k])))
+    return res[b]["L"][:, j]
+
+
+class SlowProjector:
+    """
+    Projection onto (part of) the slow manifold with right AND left modes,
+        P(X) = sum_k r_k <l_k, X> / <l_k, r_k>,     <A, B> = Tr(A^dag B),
+    over the chosen modes sel = {block: [k, ...]}.  P(rho0) is the state that
+    rho0 has evolved into once the fast modes have decayed but before the
+    chosen slow modes decay: Lieu et al.'s quench protocol, evaluated exactly
+    instead of by time evolution.  No cut and no free parameter enter.
+    """
+
+    def __init__(self, D, blocks, res, sel):   # store (indices, r_k, l_k/<l_k,r_k>*)
+        self.D, self.terms = D, []
+        for b, ks in sel.items():
+            for k in ks:
+                r = res[b]["R"][:, k]
+                w = paired_left(res, b, k)
+                self.terms.append((blocks[b], r, w / np.conj(np.vdot(w, r))))
+
+    def __call__(self, X):                      # P(X) for a D x D operator X
+        x = X.reshape(-1, order="F")
+        out = np.zeros(self.D * self.D, dtype=complex)
+        for idx, r, w in self.terms:
+            out[idx] += r * np.vdot(w, x[idx])
+        return out.reshape(self.D, self.D, order="F")
+
+
+def metastability_ratio(res):
+    """
+    eps = (slowest rate of the symmetry-breaking blocks) / (next rate in those
+    blocks).  Perturbatively the slow modes deviate from exactly steady
+    (noiseless-subsystem) form by O(eps), so eps sets the floor of the NS test.
+    """
+    sb = ["E_++_-1", "E_--_-1", "E_+-_i", "E_+-_-i"]
+    slow = max(abs(res[b]["lam"][0]) for b in sb)
+    nxt = min(abs(res[b]["lam"][1]) for b in sb)
+    return slow / nxt, slow, nxt
+
+
+def which_qubit_observable(model, blocks, res, b, sub):
+    """
+    The conserved quantity of the E_mumu^{-1} mode as a Hermitian observable
+    l_T on the parity subspace `sub`: P(rho) contains r_T * Tr(l_T rho), with
+    r_T Hermitian and oriented so that Tr(Jx r_T) > 0.  l_T ~ +1 on qubit A,
+    -1 on qubit B, ~0 on states that end up in A or B at random.
+    """
+    D = model["D"]
+    rH, _ = hermitian_with_phase(vec_to_op(blocks[b], res[b]["R"][:, 0], D))
+    if np.real(np.trace(model["Jx"] @ rH)) < 0:
+        rH = -rH
+    w = vec_to_op(blocks[b], paired_left(res, b, 0), D)
+    w = w / np.conj(np.vdot(w.reshape(-1), rH.reshape(-1)))     # <w, r_T> = 1
+    lT = w.conj().T[sub]                                        # Tr(lT rho) = <w, rho>
+    return 0.5 * (lT + lT.conj().T)
+
+
+def spectral_qubit_states(model, blocks, res, qubit="A"):
+    """
+    Cut-free operators of one compass qubit:
+      psi_e : extreme metastable state of the qubit in the even sector, i.e. the
+              eigenvector of the which-qubit observable l_T with the largest
+              (A) or smallest (B) eigenvalue -- the state most certain to stay
+              in that qubit;
+      psi_o : a|psi_e>/norm, its odd partner with the SAME auxiliary state
+              (a is the logical X of a cat qubit);
+      rho_mu,nu = P(|psi_mu><psi_nu|) with P the slow-manifold projection over
+              the slowest mode of every block, plus slow vacuum<->SR switching
+              modes of E_mumu^{+1} where they exist (then the vacuum is removed
+              by the dynamics' own definition, "SR-conditioned").
+    """
+    D, nl = model["D"], model["n"]
+    even, odd = (nl % 2 == 0), (nl % 2 == 1)
+    ee, oo, eo = np.ix_(even, even), np.ix_(odd, odd), np.ix_(even, odd)
+    _, _, nxt = metastability_ratio(res)
+    sw = {b: [k for k in range(1, len(res[b]["lam"]))
+              if abs(res[b]["lam"][k]) < SWITCH_FRACTION * nxt]
+          for b in ("E_++_1", "E_--_1")}
+    sel = {"E_++_1": [0] + sw["E_++_1"], "E_--_1": [0] + sw["E_--_1"],
+           "E_++_-1": [0], "E_--_-1": [0], "E_+-_i": [0], "E_+-_-i": [0]}
+    P = SlowProjector(D, blocks, res, sel)
+    lT = which_qubit_observable(model, blocks, res, "E_++_-1", ee)
+    w, V = np.linalg.eigh(lT)
+    # committed basin of this qubit in both parity sectors: eigenvectors of the
+    # which-qubit observable with committor (l_T normalised to +1 on this qubit)
+    # above COMMITTOR_MIN -- a dynamical replacement for the photon-number cut
+    w_o, V_o = np.linalg.eigh(which_qubit_observable(model, blocks, res, "E_--_-1", oo))
+    basin = {}
+    for mu, wv, Vv in (("e", w, V), ("o", w_o, V_o)):
+        q = wv / (wv.max() if qubit == "A" else wv.min())       # committor, 1 on this qubit
+        basin[mu] = Vv[:, q > COMMITTOR_MIN]
+    psi_e = np.zeros(D, dtype=complex)
+    psi_e[even] = V[:, -1] if qubit == "A" else V[:, 0]
+    psi_o = model["a"] @ psi_e
+    psi_o /= np.linalg.norm(psi_o)
+    rho_ee = P(np.outer(psi_e, psi_e.conj()))[ee]
+    rho_oo = P(np.outer(psi_o, psi_o.conj()))[oo]
+    rho_eo = P(np.outer(psi_e, psi_o.conj()))[eo]
+    neg = min(np.linalg.eigvalsh(0.5 * (r + r.conj().T)).min() / np.real(np.trace(r))
+              for r in (rho_ee, rho_oo))
+    rho_ee = 0.5 * (rho_ee + rho_ee.conj().T) / np.real(np.trace(rho_ee))
+    rho_oo = 0.5 * (rho_oo + rho_oo.conj().T) / np.real(np.trace(rho_oo))
+    l_eo = vec_to_op(blocks["E_+-_i"], paired_left(res, "E_+-_i", 0), D)[eo]
+    return dict(rho_ee=rho_ee, rho_oo=rho_oo, rho_eo=rho_eo, l_eo=l_eo, basin=basin,
+                negativity=float(neg), lT_extreme=float(w[-1] if qubit == "A" else w[0]),
+                switch={b: [abs(res[b]["lam"][k]) for k in ks] for b, ks in sw.items()})
+
+
+def committed_basin_ns_test(st):
+    """
+    NS test of the cut-free qubit states restricted to the qubit's committed
+    basin (committor > COMMITTOR_MIN in both parity sectors), i.e. with the
+    uncommitted spin-flip excursion states removed -- by the dynamics' own
+    criterion, not by photon number.  Returns distances and the weight kept.
+    """
+    Pe = st["basin"]["e"] @ st["basin"]["e"].conj().T
+    Po = st["basin"]["o"] @ st["basin"]["o"].conj().T
+    re, ro, reo = Pe @ st["rho_ee"] @ Pe, Po @ st["rho_oo"] @ Po, Pe @ st["rho_eo"] @ Po
+    kept = float(np.real(np.trace(re)))
+    r = lieu_ns_test(re / np.real(np.trace(re)), ro / np.real(np.trace(ro)), reo)
+    return dict(Dt_ee_oo=float(r["Dt_ee_oo"]), Dt_ee_eo=float(r["Dt_ee_eo"]), kept=kept)
+
+
+def aux_resolved_ns_test(st, n_even):
+    """
+    Lieu NS test of the cut-free qubit states, resolved by auxiliary state.
+    Besides the usual numbers (full test) it reports
+      dom : the test restricted to the dominant auxiliary states z_k > Q_THRESHOLD
+            (renormalised) -- the noiseless-subsystem part of the qubit;
+      w_inc : weight of auxiliary states that carry less than half of the
+            logical coherence an NS requires (Re z_eo,kk / z_k < 1/2) -- the
+            incoherent admixture (low-photon / spin-flip excursion states);
+      per aux state: weight z_k, mean photon number n_k, coherence ratio.
+    """
+    full = lieu_ns_test(st["rho_ee"], st["rho_oo"], st["rho_eo"], left_eo=st["l_eo"])
+    ze, Ue = eig_desc(st["rho_ee"])
+    zo, Uo = eig_desc(st["rho_oo"])
+    Z = Ue.conj().T @ st["rho_eo"] @ Uo
+    Z = Z * np.exp(-1j * np.angle(np.diag(Z)))[None, :]
+    Z = Z / np.trace(Z)
+    K = int(min(np.sum(ze > 1e-12), np.sum(zo > 1e-12), 400))
+    coh = np.real(np.diag(Z)[:K]) / ze[:K]
+    n_k = np.array([np.sum(n_even * np.abs(Ue[:, k]) ** 2) for k in range(K)])
+    Kd = max(1, int(np.sum(ze > Q_THRESHOLD)))
+    a_, b_ = ze[:Kd] / ze[:Kd].sum(), zo[:Kd] / zo[:Kd].sum()
+    Zd = Z[:Kd, :Kd] / np.trace(Z[:Kd, :Kd])
+    return dict(full=full, dom_K=Kd, dom_Dt_ee_oo=float(0.5 * np.abs(a_ - b_).sum()),
+                dom_Dt_ee_eo=float(trace_distance(np.diag(a_), Zd)),
+                # the coherence block itself, on the dominant states: compared with
+                # the odd populations, and split into its diagonal mismatch and its
+                # largest off-diagonal element (both must vanish for an NS)
+                dom_Dt_oo_eo=float(trace_distance(np.diag(b_), Zd)),
+                dom_eo_diag=float(0.5 * np.sum(np.abs(a_ - np.real(np.diag(Zd))))),
+                dom_eo_offdiag=float(np.max(np.abs(Zd - np.diag(np.diag(Zd))))) if Kd > 1 else 0.0,
+                w_inc=float(ze[:K][coh < 0.5].sum()),
+                aux_z=ze[:K].real, aux_n=n_k, aux_coh=coh)
+
+
+def cut_free_analysis(model, blocks, res):
+    """Cut-free NS test for qubits A and B plus the Z4 map between them."""
+    eps, slow, nxt = metastability_ratio(res)
+    even = model["n"] % 2 == 0
+    out = dict(eps=eps, slow=slow, next=nxt)
+    states = {}
+    for q in ("A", "B"):
+        states[q] = spectral_qubit_states(model, blocks, res, q)
+        out[q] = aux_resolved_ns_test(states[q], model["n"][even])
+        out[q].update(negativity=states[q]["negativity"], lT_extreme=states[q]["lT_extreme"])
+        out[q].update({f"basin_{k}": v for k, v in committed_basin_ns_test(states[q]).items()})
+    out["switch"] = states["A"]["switch"]
+    _, pi4 = symmetry_labels(model)
+    p = pi4[even]
+    out["Z4map"] = float(trace_distance(p[:, None] * states["A"]["rho_ee"] * np.conj(p)[None, :],
+                                        states["B"]["rho_ee"]))
+    Jx = model["Jx"].toarray()[np.ix_(even, even)]
+    out["Jx_A"] = float(np.real(np.trace(Jx @ states["A"]["rho_ee"])))
+    return out
+
+
 def analyse(model, blocks, res, n_cut=None, verbose=True):
     """
     Steps 3-6 for one N, given the slow modes `res` of all blocks:
     vacuum cut -> mode selection -> qubit separation -> Lieu NS test for
     qubits A and B -> relation diagnostics.  n_cut overrides the automatic
     vacuum cut (used for the sensitivity scan).  Returns a dict of results.
+    On the main call (n_cut=None) the cut-free NS test (section 4b) is run
+    as well; it is the primary result, the cut-based test a comparison.
     """
     D, nl = model["D"], model["n"]
     even, odd = (nl % 2 == 0), (nl % 2 == 1)
     basin = find_superradiant_basin(model, blocks, res)
+    main_call = n_cut is None
     if n_cut is None:
         n_cut = basin["n_cut"]
     sel = select_sr_modes(model, blocks, res, n_cut)
@@ -778,6 +986,8 @@ def analyse(model, blocks, res, n_cut=None, verbose=True):
                kappa2=model["kappa2"], wc=model["wc"], wa=model["wa"],
                n_cut_used=n_cut, sel=sel, basin=basin, herm_res=herm_res,
                split_diag=split["diag"], ns=ns, rel=rel)
+    if main_call:                          # primary, cut-free NS test (section 4b)
+        out["cutfree"] = cut_free_analysis(model, blocks, res)
     if verbose:
         report(out, res)
     return out
@@ -790,8 +1000,9 @@ def report(out, res):
     """Human-readable summary of one N (also written to the summary file)."""
     b, sel, rel, sd = out["basin"], out["sel"], out["rel"], out["split_diag"]
     L = []
+    freq = "".join(f"  {k}={out[k]}" for k, dflt in (("wc", WC), ("wa", WA)) if out[k] != dflt)
     L.append(f"\n=== N={out['N']}  M={out['M']}  lam={out['lam']}  "
-             f"kappa2={out['kappa2']}  (Hilbert dim {out['D']}) ===")
+             f"kappa2={out['kappa2']}{freq}  (Hilbert dim {out['D']}) ===")
     L.append(f"Fock cutoff check: slow-mode weight in top 4 Fock states = "
              f"{b['tail_weight']:.1e}" + ("   <-- INCREASE M" if b["tail_weight"] > 1e-7 else ""))
     L.append(f"Vacuum isolation: SR peak n={b['n_peak']}, cut n_cut={out['n_cut_used']}, "
@@ -812,9 +1023,35 @@ def report(out, res):
                  f"E^-1 vs E^+1 shape mismatch = {d['shape_mismatch']:.1e}")
     L.append(f"coherence modes: cancellation residual A {sd['eo_A']['cancel_residual']:.1e}, "
              f"B {sd['eo_B']['cancel_residual']:.1e}; A-B cross terms {sd['eo_cross']:.1e}")
+    if "cutfree" in out:
+        cf = out["cutfree"]
+        # decay rate of the logical coherence (mean of the two coherence modes), in
+        # units of omega_c: the coherence block of a mode that decays at this rate
+        # cannot be exactly NS-shaped, so D_t(z_ee,z_eo) is compared with it
+        lam_coh = 0.5 * sum(abs(sel[bb]["lam"].real) for bb in ("E_+-_i", "E_+-_-i")) / out["wc"]
+        L.append(f"CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  "
+                 f"eps = slow rate / next rate = {cf['slow']:.2e}/{cf['next']:.2e} = {cf['eps']:.2e}   "
+                 f"switching modes kept: e {np.round(cf['switch']['E_++_1'], 5)}, "
+                 f"o {np.round(cf['switch']['E_--_1'], 5)}")
+        for q in ("A", "B"):
+            c, f = cf[q], cf[q]["full"]
+            L.append(f"   qubit {q}, full metastable state: D_t(z_ee,z_oo)={f['Dt_ee_oo']:.2e}  "
+                     f"D_t(z_ee,z_eo)={f['Dt_ee_eo']:.2e}  q-test err={f['q_error']:.1e} (top {f['q_K']})  "
+                     f"purity={f['purity']:.4f}  most negative eigenvalue={c['negativity']:.1e}")
+            L.append(f"   qubit {q}, dominant aux states (z>{Q_THRESHOLD:g}, {c['dom_K']} states): "
+                     f"D_t(z_ee,z_oo)={c['dom_Dt_ee_oo']:.2e}  D_t(z_ee,z_eo)={c['dom_Dt_ee_eo']:.2e}   "
+                     f"incoherent weight={c['w_inc']:.2e}")
+            L.append(f"      coherence block on these states: D_t(z_oo,z_eo)={c['dom_Dt_oo_eo']:.2e}  "
+                     f"diagonal mismatch={c['dom_eo_diag']:.2e}  largest off-diagonal={c['dom_eo_offdiag']:.2e}   "
+                     f"D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = {c['dom_Dt_ee_eo'] / lam_coh:.2f}")
+            L.append(f"   qubit {q}, committed basin (committor>{COMMITTOR_MIN:g}, weight kept "
+                     f"{c['basin_kept']:.5f}): D_t(z_ee,z_oo)={c['basin_Dt_ee_oo']:.2e}  "
+                     f"D_t(z_ee,z_eo)={c['basin_Dt_ee_eo']:.2e}")
+        L.append(f"   Z4 map Pi4 rho_A Pi4^dag vs rho_B: {cf['Z4map']:.1e}   <Jx>_A = {cf['Jx_A']:+.3f}")
+    L.append(f"NS test WITH FOCK CUT n >= {out['n_cut_used']} (old method; lobe only):")
     for q in ("A", "B"):
         n1, n2 = out["ns"][(q, "main")], out["ns"][(q, "check")]
-        L.append(f"NS test qubit {q}: D_t(z_ee,z_oo)={n1['Dt_ee_oo']:.2e}  "
+        L.append(f"   qubit {q}: D_t(z_ee,z_oo)={n1['Dt_ee_oo']:.2e}  "
                  f"D_t(z_ee,z_eo)={n1['Dt_ee_eo']:.2e} [{n2['Dt_ee_eo']:.2e}]  "
                  f"purity(z)={n1['purity']:.4f}  q-test err={n1['q_error']:.1e} "
                  f"(top {n1['q_K']})  z[:4]={np.round(n1['z_ee'][:4], 4)}")
@@ -840,9 +1077,22 @@ def report(out, res):
     out["report"] = txt
 
 
-def result_path(N, lam, kappa2):
+def run_tag(lam, kappa2, wc=WC, wa=WA):
+    """Parameter part of every output file name, e.g. 'lam0.600_k20.050'.
+    omega_c and omega_a are appended only when they differ from the defaults
+    (e.g. '..._wa0.250' for the low-leak control run), so such runs do not
+    overwrite the default results and old result files keep their names."""
+    tag = f"lam{lam:.3f}_k2{kappa2:.3f}"
+    if wc != WC:
+        tag += f"_wc{wc:.3f}"
+    if wa != WA:
+        tag += f"_wa{wa:.3f}"
+    return tag
+
+
+def result_path(N, lam, kappa2, wc=WC, wa=WA):
     """File name of the saved results for one N (all in the flat OUTDIR)."""
-    return os.path.join(OUTDIR, f"ns_N{N}_lam{lam:.3f}_k2{kappa2:.3f}.npz")
+    return os.path.join(OUTDIR, f"ns_N{N}_{run_tag(lam, kappa2, wc, wa)}.npz")
 
 
 def save(out, res, timing):
@@ -874,8 +1124,22 @@ def save(out, res, timing):
         f["rel_" + k] = v
     for k, v in out.get("cut_scan", {}).items():
         f["cutscan_" + k] = v
+    cf = out.get("cutfree")
+    if cf is not None:                     # cut-free NS test -> keys cf_*
+        for k in ("eps", "slow", "next", "Z4map", "Jx_A"):
+            f[f"cf_{k}"] = cf[k]
+        for b, v in cf["switch"].items():
+            f[f"cf_switch_{b}"] = np.array(v)
+        for q in ("A", "B"):
+            for k, v in cf[q].items():
+                if k == "full":
+                    for kk, vv in v.items():
+                        if not kk.startswith("U_"):
+                            f[f"cf_{q}_full_{kk}"] = vv
+                else:
+                    f[f"cf_{q}_{k}"] = v
     f["timing"] = json.dumps(timing)
-    np.savez(result_path(out["N"], out["lam"], out["kappa2"]), **f)
+    np.savez(result_path(out["N"], out["lam"], out["kappa2"], out["wc"], out["wa"]), **f)
 
 
 BLOCK_LABEL = {b: (r"$E_{%s}^{%s}$" % (b.split("_")[1], b.split("_")[2]))
@@ -883,17 +1147,19 @@ BLOCK_LABEL = {b: (r"$E_{%s}^{%s}$" % (b.split("_")[1], b.split("_")[2]))
 SB_BLOCKS = ["E_++_-1", "E_--_-1", "E_+-_i", "E_+-_-i"]   # symmetry-breaking modes
 
 
-def make_plots(lam, kappa2):
-    """Summary figures + table from all saved .npz files with this lam, kappa2."""
-    files = sorted(glob.glob(os.path.join(OUTDIR, f"ns_N*_lam{lam:.3f}_k2{kappa2:.3f}.npz")),
+def make_plots(lam, kappa2, wc=WC, wa=WA):
+    """Summary figures + table from all saved .npz files with these parameters."""
+    tag = run_tag(lam, kappa2, wc, wa)
+    files = sorted(glob.glob(os.path.join(OUTDIR, f"ns_N*_{tag}.npz")),
                    key=lambda f: int(os.path.basename(f).split("_")[1][1:]))
     if not files:
         print("no result files found for plotting")
         return
     data = [dict(np.load(f, allow_pickle=True)) for f in files]
     Ns = np.array([int(d["N"]) for d in data])
-    tag = f"lam{lam:.3f}_k2{kappa2:.3f}"
-    title = rf"$\lambda={lam}$, $\kappa_2={kappa2}$"
+    title = (rf"$\lambda={lam}$, $\kappa_2={kappa2}$"
+             + (rf", $\omega_c={wc}$" if wc != WC else "")
+             + (rf", $\omega_a={wa}$" if wa != WA else ""))
 
     # --- Fig 1: spectrum.  Left: the slowest SR mode of the four blocks that
     # carry symmetry breaking (E_-+ are their conjugates; E^{+1} hold the
@@ -916,29 +1182,45 @@ def make_plots(lam, kappa2):
     fig.savefig(os.path.join(OUTDIR, f"fig1_spectrum_{tag}.png"), dpi=150)
     plt.close(fig)
 
-    # --- Fig 2: NS test (Lieu SM Fig. S2 / S7 analogue)
-    fig, ax = plt.subplots(1, 3, figsize=(15.5, 4.3))
-    for key, lab, mk in (("Dt_ee_oo", r"$D_t(z_{ee}, z_{oo})$", "o-"),
-                         ("Dt_ee_eo", r"$D_t(z_{ee}, z_{eo})$", "s-"),
-                         ("q_error", r"$\max|q_{eo}-1|$ (conserved quantity)", "^-")):
-        ax[0].semilogy(Ns, [d[f"ns_A_main_{key}"] for d in data], mk, label=lab)
-    ax[0].semilogy(Ns, [d["ns_A_check_Dt_ee_eo"] for d in data], "s:", color="C1",
-                   alpha=0.6, label=r"$D_t(z_{ee}, z_{eo})$, single-block check")
+    # --- Fig 2: NS test.  (a) cut-free test vs N (full metastable qubit state,
+    # its dominant auxiliary states, incoherent weight, eps), old Fock-cut test
+    # for comparison; (b) which auxiliary states carry the logical coherence;
+    # (c) conserved-quantity test.  Files from runs without the cut-free test
+    # (older versions of this script) show only the old curve.
+    def g(d, k):                       # value from a result file, NaN if absent
+        return float(d[k]) if k in d else np.nan
+    fig, ax = plt.subplots(1, 3, figsize=(16.5, 4.4))
+    series = [("cf_A_full_Dt_ee_eo", r"cut-free, full: $D_t(z_{ee},z_{eo})$", "s-"),
+              ("cf_A_full_Dt_ee_oo", r"cut-free, full: $D_t(z_{ee},z_{oo})$", "o-"),
+              ("cf_A_dom_Dt_ee_eo", r"cut-free, dominant aux states: $D_t(z_{ee},z_{eo})$", "^-"),
+              ("cf_A_dom_Dt_ee_oo", r"cut-free, dominant aux states: $D_t(z_{ee},z_{oo})$", "D-"),
+              ("cf_A_basin_Dt_ee_eo", r"cut-free, committed basin: $D_t(z_{ee},z_{eo})$", "*-"),
+              ("cf_A_w_inc", "incoherent weight", "v--"),
+              ("cf_eps", r"$\varepsilon$ = slow rate / next rate", "P--")]
+    for key, lab, mk in series:
+        ax[0].semilogy(Ns, [abs(g(d, key)) for d in data], mk, ms=5, label=lab)
+    ax[0].semilogy(Ns, [g(d, "ns_A_main_Dt_ee_eo") for d in data], "x:", color="0.45",
+                   label=r"old method (Fock cut): $D_t(z_{ee},z_{eo})$")
     ax[0].set_xlabel("N"); ax[0].xaxis.set_major_locator(MaxNLocator(integer=True))
     ax[0].set_title("noiseless-subsystem test, qubit A  (" + title + ")")
-    ax[0].legend(fontsize=8)
-    for d in data:
-        z = d["ns_A_main_z_ee"]
-        ax[1].semilogy(np.arange(len(z)), z, ".-", label=f"N={int(d['N'])}")
-    ax[1].set_xlabel("k")
-    ax[1].set_ylabel(r"$(z_{ee})_{kk}$")
-    ax[1].set_title("auxiliary state $M$: mixed, so NS (not DFS)")
-    ax[1].legend(fontsize=7)
-    Q = data[-1]["ns_A_main_q_matrix"]
-    zq = data[-1]["ns_A_main_z_ee"][:Q.shape[0]]
+    ax[0].legend(fontsize=7)
+    dl = data[-1]
+    if "cf_A_aux_z" in dl:
+        z, n, c = dl["cf_A_aux_z"], dl["cf_A_aux_n"], np.clip(dl["cf_A_aux_coh"], 0, 1)
+        sc = ax[1].scatter(n, z, c=c, cmap="Blues", vmin=-0.15, vmax=1, s=26,
+                           edgecolors="0.3", linewidths=0.3)
+        ax[1].set_yscale("log")
+        ax[1].set_ylim(max(1e-12, z[z > 0].min() / 2), 2)
+        cb = plt.colorbar(sc, ax=ax[1])
+        cb.set_label(r"coherence carried, Re$(z_{eo})_{kk}/z_k$", fontsize=8)
+        ax[1].set_xlabel(r"mean photon number of auxiliary state $k$")
+        ax[1].set_ylabel(r"weight $z_k$")
+        ax[1].set_title(f"auxiliary states of qubit A, N={int(dl['N'])} (cut-free)")
+    Q = dl["cf_A_full_q_matrix"] if "cf_A_full_q_matrix" in dl else dl["ns_A_main_q_matrix"]
+    zq = dl["cf_A_full_z_ee"][:Q.shape[0]] if "cf_A_full_z_ee" in dl else dl["ns_A_main_z_ee"][:Q.shape[0]]
     im = ax[2].imshow(np.log10(np.abs(Q - np.eye(Q.shape[0])) + 1e-16),
                       cmap="viridis", vmin=-8, vmax=0)
-    ax[2].set_title(rf"$\log_{{10}}|q_{{eo}}-1|$, qubit A, N={int(data[-1]['N'])}")
+    ax[2].set_title(rf"$\log_{{10}}|q_{{eo}}-1|$, qubit A, N={int(dl['N'])}")
     ax[2].set_xlabel("k  (auxiliary state, ordered by weight $z_k$)")
     secax = [f"{z:.0e}" for z in zq]
     ax[2].set_yticks(range(len(secax)))
@@ -1010,20 +1292,23 @@ def make_plots(lam, kappa2):
     fig.savefig(os.path.join(OUTDIR, f"fig5_spin_memory_{tag}.png"), dpi=150)
     plt.close(fig)
 
-    # --- text table
-    lines = ["N   M    k*  n_cut  vac.weight  |Re lam| E++-1  |Re lam| E+-i  "
-             "D_t(ee,oo)  D_t(ee,eo)  q-err    AB-coh   Gam_inter/Gam_intra  "
-             "D_t(ee,eo) at cuts [n_cut-4, n_cut, n_cut+4]"]
+    # --- text table (cut-free test first; 'cut' columns = old Fock-cut method)
+    # D/lam_c: dominant-state D_t(z_ee,z_eo) over the coherence decay rate in units of omega_c
+    lines = ["N   M    k*  eps       |Re lam| E++-1  |Re lam| E+-i  "
+             "cut-free: D_t(ee,oo) D_t(ee,eo)  dominant: D_t(ee,oo) D_t(ee,eo)  incoh.w.  q-err    D/lam_c | "
+             "cut: n_cut D_t(ee,oo) D_t(ee,eo)  AB-coh   Gam_inter/Gam_intra"]
     for d in data:
         N = int(d["N"])
+        lam_c = 0.5 * (abs(d["sel_E_+-_i"].real) + abs(d["sel_E_+-_-i"].real)) / float(d["wc"])
         lines.append(
             f"{N:<3d} {int(d['M']):<4d} {predicted_spin_flips(N, float(d['lam']), float(d['wc'])):<3d} "
-            f"{int(d['n_cut_used']):<6d} {float(d['basin_vacuum_weight']):.2e}    "
-            f"{abs(d['sel_E_++_-1'].real):.2e}       {abs(d['sel_E_+-_i'].real):.2e}      "
-            f"{float(d['ns_A_main_Dt_ee_oo']):.2e}    {float(d['ns_A_main_Dt_ee_eo']):.2e}    "
-            f"{float(d['ns_A_main_q_error']):.1e}  {float(d['split_e_ab_coherence']):.1e}  "
-            f"{float(d['rel_Gamma_inter_ee'])/max(float(d['rel_Gamma_intra']), 1e-300):.2e}"
-            f"             " + " / ".join(f"{x:.1e}" for x in d.get("cutscan_Dt_ee_eo", [])))
+            f"{g(d, 'cf_eps'):.2e}  {abs(d['sel_E_++_-1'].real):.2e}       {abs(d['sel_E_+-_i'].real):.2e}      "
+            f"{g(d, 'cf_A_full_Dt_ee_oo'):.2e}  {g(d, 'cf_A_full_Dt_ee_eo'):.2e}            "
+            f"{g(d, 'cf_A_dom_Dt_ee_oo'):.2e}  {g(d, 'cf_A_dom_Dt_ee_eo'):.2e}  "
+            f"{g(d, 'cf_A_w_inc'):.2e}  {g(d, 'cf_A_full_q_error'):.1e}  {g(d, 'cf_A_dom_Dt_ee_eo') / lam_c:6.2f} | "
+            f"{int(d['n_cut_used']):<5d} {float(d['ns_A_main_Dt_ee_oo']):.2e}  {float(d['ns_A_main_Dt_ee_eo']):.2e}    "
+            f"{float(d['split_e_ab_coherence']):.1e}  "
+            f"{float(d['rel_Gamma_inter_ee'])/max(float(d['rel_Gamma_intra']), 1e-300):.2e}")
     table = "\n".join(lines)
     with open(os.path.join(OUTDIR, f"summary_table_{tag}.txt"), "w") as fh:
         fh.write(table + "\n")
@@ -1073,9 +1358,9 @@ def run_one_N(N, M, lam, kappa2, wc, wa, n_workers, mem_budget_gb):
                   converged={b: bool(res[b].get("converged", True)) for b in res})
     out["report"] += "\n" + line + f"\n    time {timing['total_s']:.0f}s"
     save(out, res, timing)
-    with open(os.path.join(OUTDIR, f"summary_lam{lam:.3f}_k2{kappa2:.3f}.txt"), "a") as fh:
+    with open(os.path.join(OUTDIR, f"summary_{run_tag(lam, kappa2, wc, wa)}.txt"), "a") as fh:
         fh.write(out["report"] + "\n")
-    print(f"    saved {result_path(N, lam, kappa2)}  ({timing['total_s']:.0f}s)", flush=True)
+    print(f"    saved {result_path(N, lam, kappa2, wc, wa)}  ({timing['total_s']:.0f}s)", flush=True)
 
 
 def main():
@@ -1116,7 +1401,7 @@ def main():
                 traceback.print_exc()
                 print(f"!!! analysis for N={N} failed (see traceback); continuing",
                       flush=True)
-    make_plots(args.lam, args.kappa2)
+    make_plots(args.lam, args.kappa2, args.wc, args.wa)
 
 
 if __name__ == "__main__":

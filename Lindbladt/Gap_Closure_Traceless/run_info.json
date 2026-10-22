@@ -1,0 +1,56 @@
+{
+ "params": {
+  "Ns": [
+   5,
+   6,
+   7
+  ],
+  "lam_min": 0.48,
+  "lam_max": 0.58,
+  "n_steps": 33,
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.05,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "k": 6,
+  "sigma": 1e-08,
+  "tol": 1e-10,
+  "workers": 0,
+  "mem_gb": 100.0,
+  "tail_tol": 1e-07,
+  "no_mirror": false,
+  "outdir": "Gap_Closure_Traceless",
+  "plot_only": false,
+  "selfcheck": false
+ },
+ "lam_c_mf": 0.51234753829798,
+ "runs": [
+  {
+   "N": 5,
+   "workers": 8,
+   "M_min": 96,
+   "M_max": 152,
+   "seconds": 438.72952246665955,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 6,
+   "workers": 8,
+   "M_min": 112,
+   "M_max": 176,
+   "seconds": 1125.8260114192963,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 7,
+   "workers": 4,
+   "M_min": 128,
+   "M_max": 200,
+   "seconds": 4736.665764093399,
+   "points_above_tail_tol": []
+  }
+ ]
+}

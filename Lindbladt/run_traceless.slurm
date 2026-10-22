@@ -15,4 +15,8 @@
 # module load python
 # source ~/path/to/venv/bin/activate
 
+module load stack/2025-06 gcc/8.5.0
+module load python/3.11.9
+source /cluster/home/egoldhahn/masterarbeit/MasterThesisShenanigans/.venv/bin/activate
+
 python sweep_traceless.py --Ns 5 6 7 --lam-min 0.48 --lam-max 0.58 --n-steps 33

@@ -1,0 +1,12 @@
+N=8 sector E_++_1, mean-field lam_c=0.5123, coarse grid 0.545..0.568 (6 pts), 2 zoom rounds x 3 pts, 3 workers
+  N=8 lam=0.54500 M=168 K=285768 LU=5.00e+08 nnz (8.00 GB, 375s) gap_sw=1.9443e-04 gap_all=1.9443e-04 <n>/N=4.442 [421s]
+  N=8 lam=0.54960 M=176 K=313632 LU=5.58e+08 nnz (8.93 GB, 435s) gap_sw=1.5172e-04 gap_all=1.5172e-04 <n>/N=6.813 [484s]
+  N=8 lam=0.55420 M=184 K=342792 LU=6.19e+08 nnz (9.90 GB, 494s) gap_sw=1.4440e-04 gap_all=1.4440e-04 <n>/N=8.381 [549s]
+  N=8 lam=0.55880 M=192 K=373248 LU=6.83e+08 nnz (10.93 GB, 568s) gap_sw=1.5074e-04 gap_all=1.5074e-04 <n>/N=9.278 [628s]
+  N=8 lam=0.56340 M=200 K=405000 LU=7.57e+08 nnz (12.11 GB, 638s) gap_sw=1.6235e-04 gap_all=1.6235e-04 <n>/N=9.873 [706s]
+  N=8 lam=0.56800 M=208 K=438048 LU=8.32e+08 nnz (13.31 GB, 728s) gap_sw=1.7643e-04 gap_all=1.7643e-04 <n>/N=10.353 [801s]
+  N=8 lam=0.55190 M=184 K=342792 LU=6.19e+08 nnz (9.90 GB, 487s) gap_sw=1.4544e-04 gap_all=1.4544e-04 <n>/N=7.706 [542s]
+  N=8 lam=0.55650 M=192 K=373248 LU=6.81e+08 nnz (10.90 GB, 556s) gap_sw=1.4659e-04 gap_all=1.4659e-04 <n>/N=8.887 [615s]
+  N=8 lam=0.55305 M=184 K=342792 LU=6.19e+08 nnz (9.90 GB, 490s) gap_sw=1.4441e-04 gap_all=1.4441e-04 <n>/N=8.068 [541s]
+  N=8 lam=0.55535 M=192 K=373248 LU=6.81e+08 nnz (10.90 GB, 557s) gap_sw=1.4519e-04 gap_all=1.4519e-04 <n>/N=8.651 [615s]
+N=8: lam*=0.55376  gap_min=1.4434e-04  (parabola in ln(gap))  -> gap_results/gapscan_++_N8.json  [2580s]

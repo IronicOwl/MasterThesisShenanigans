@@ -15,16 +15,16 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 # --- Parameters ---
-N = 6
-M = 120
+N = 5
+M = 130
 wc = 1.0
 wa = 1.0
 kappa2 = 0.05
-target_sector = "E_--_-1"
+target_sector = "E_--_1"
 core_nr = 8
 
 lam_min = 0.45
-lam_max = 0.57
+lam_max = 0.58
 n_steps = 32
 lam_vals = np.linspace(lam_min, lam_max, n_steps)
 

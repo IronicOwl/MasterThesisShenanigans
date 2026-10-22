@@ -1,0 +1,325 @@
+qutip 5.3.1, numpy 2.4.6, workers=8
+
+##### N=2: building Liouvillian (M=86, Hilbert dim 258, Liouville dim 66564) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~8321, estimated 0.1 GB each -> 6 in parallel
+    [E_++_1  ] dim     8321  LU     1.4M nnz (   0.2s)  total    0.9s  peak mem   0.2 GB  slowest: -2.59e-15-5.88e-16j
+    [E_--_1  ] dim     8321  LU     1.4M nnz (   0.2s)  total    1.0s  peak mem   0.2 GB  slowest: +3.99e-16-4.47e-16j
+    [E_+-_i  ] dim     8320  LU     1.4M nnz (   0.2s)  total    1.1s  peak mem   0.2 GB  slowest: -7.14e-04+3.99e-04j
+    [E_+-_-i ] dim     8321  LU     1.4M nnz (   0.2s)  total    1.2s  peak mem   0.2 GB  slowest: -7.18e-04+3.95e-04j
+    [E_++_-1 ] dim     8320  LU     1.4M nnz (   0.2s)  total    1.2s  peak mem   0.2 GB  slowest: -1.85e-04-2.46e-16j
+    [E_--_-1 ] dim     8320  LU     1.4M nnz (   0.2s)  total    2.2s  peak mem   0.2 GB  slowest: -2.34e-05-8.49e-16j
+
+=== N=2  M=86  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 258) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 2.4e-11
+Vacuum isolation: SR peak n=24, cut n_cut=2, P(valley)/P(peak)=2.2e-02, steady-state weight below cut=2.64e-03, P(0)=1.8e-03
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: -2.587e-15-5.88e-16j   SR frac 1.0000   | 2nd 1.32e-01   vacuum<->SR switching mode -1.32e-01
+   E_++_-1  mode 0: -1.850e-04-2.46e-16j   SR frac 1.0000   | 2nd 5.42e-01
+   E_--_1   mode 0: +3.991e-16-4.47e-16j   SR frac 1.0000   | 2nd 1.10e-01   vacuum<->SR switching mode -1.10e-01
+   E_--_-1  mode 0: -2.338e-05-8.49e-16j   SR frac 1.0000   | 2nd 1.08e+00
+   E_+-_i   mode 0: -7.139e-04+3.99e-04j   SR frac 1.0000   | 2nd 8.68e-01
+   E_+-_-i  mode 0: -7.183e-04+3.95e-04j   SR frac 1.0000   | 2nd 8.68e-01
+   E_-+_i   mode 0: -7.183e-04-3.95e-04j   SR frac 1.0000   | 2nd 8.68e-01
+   E_-+_-i  mode 0: -7.139e-04-3.99e-04j   SR frac 1.0000   | 2nd 8.68e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 1.7e-04, E^-1 vs E^+1 shape mismatch = 4.9e-04
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 3.7e-05, E^-1 vs E^+1 shape mismatch = 9.4e-05
+coherence modes: cancellation residual A 1.7e-05, B 1.7e-05; A-B cross terms 1.4e-04
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 8.20e-04/5.42e-01 = 1.51e-03   switching modes kept: e [], o []
+   qubit A, full metastable state: D_t(z_ee,z_oo)=2.29e-03  D_t(z_ee,z_eo)=4.11e-03  q-test err=1.0e+00 (top 5)  purity=0.7532  most negative eigenvalue=-1.1e-03
+   qubit A, dominant aux states (z>0.001, 5 states): D_t(z_ee,z_oo)=1.91e-03  D_t(z_ee,z_eo)=3.44e-03   incoherent weight=3.41e-03
+      coherence block on these states: D_t(z_oo,z_eo)=2.27e-03  diagonal mismatch=2.57e-03  largest off-diagonal=1.31e-03   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 4.80
+   qubit A, committed basin (committor>0.8, weight kept 0.99988): D_t(z_ee,z_oo)=1.75e-03  D_t(z_ee,z_eo)=3.42e-03
+   qubit B, full metastable state: D_t(z_ee,z_oo)=2.29e-03  D_t(z_ee,z_eo)=4.11e-03  q-test err=1.0e+00 (top 5)  purity=0.7532  most negative eigenvalue=-1.1e-03
+   qubit B, dominant aux states (z>0.001, 5 states): D_t(z_ee,z_oo)=1.91e-03  D_t(z_ee,z_eo)=3.44e-03   incoherent weight=3.41e-03
+      coherence block on these states: D_t(z_oo,z_eo)=2.27e-03  diagonal mismatch=2.57e-03  largest off-diagonal=1.31e-03   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 4.80
+   qubit B, committed basin (committor>0.8, weight kept 0.99988): D_t(z_ee,z_oo)=1.75e-03  D_t(z_ee,z_eo)=3.42e-03
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 2.4e-15   <Jx>_A = +1.001
+NS test WITH FOCK CUT n >= 2 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=8.99e-04  D_t(z_ee,z_eo)=2.10e-03 [2.10e-03]  purity(z)=0.7570  q-test err=2.7e-01 (top 4)  z[:4]=[0.8624 0.1137 0.019  0.0039]
+   qubit B: D_t(z_ee,z_oo)=8.99e-04  D_t(z_ee,z_eo)=2.10e-03 [2.10e-03]  purity(z)=0.7570  q-test err=2.7e-01 (top 4)  z[:4]=[0.8624 0.1137 0.019  0.0039]
+Relation: <Jx>_A=+1.000 <Jx>_B=-1.000  <a^2>_A=-20.96-13.93j <a^2>_B=20.96+13.93j  Z4 map residual=2.6e-15  which-qubit err=2.4e-02
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 6.22e-01)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.000 -1.000   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.480e-01  intra-qubit coh 3.479e-01  inter-qubit coh 3.359e+01 / 3.359e+01
+    vacuum-cut sensitivity: cuts [0, 2, 6] -> D_t(z_ee,z_oo) [2.64e-03, 8.99e-04, 1.80e-03], D_t(z_ee,z_eo) [4.47e-03, 2.10e-03, 1.88e-03]  (max/min = 2.94)
+    saved ns_results/ns_N2_lam0.600_k20.050_wa0.250.npz  (3s)
+
+##### N=3: building Liouvillian (M=110, Hilbert dim 440, Liouville dim 193600) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~24200, estimated 0.6 GB each -> 6 in parallel
+    [E_++_1  ] dim    24200  LU     7.9M nnz (   1.2s)  total    3.0s  peak mem   0.5 GB  slowest: +3.10e-15+2.66e-15j
+    [E_--_-1 ] dim    24200  LU     7.8M nnz (   1.4s)  total    3.7s  peak mem   0.4 GB  slowest: -6.73e-06+9.44e-17j
+    [E_--_1  ] dim    24200  LU     8.1M nnz (   1.5s)  total    3.9s  peak mem   0.5 GB  slowest: +5.66e-16+8.14e-16j
+    [E_++_-1 ] dim    24200  LU     7.6M nnz (   1.4s)  total    4.0s  peak mem   0.4 GB  slowest: -1.85e-05-2.92e-16j
+    [E_+-_-i ] dim    24200  LU     7.6M nnz (   1.4s)  total    5.7s  peak mem   0.4 GB  slowest: -3.99e-05+1.77e-05j
+    [E_+-_i  ] dim    24200  LU     7.6M nnz (   1.4s)  total    7.7s  peak mem   0.4 GB  slowest: -3.99e-05+1.78e-05j
+
+=== N=3  M=110  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 440) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 2.6e-11
+Vacuum isolation: SR peak n=38, cut n_cut=2, P(valley)/P(peak)=1.8e-03, steady-state weight below cut=1.88e-04, P(0)=1.2e-04
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: +3.096e-15+2.66e-15j   SR frac 1.0000   | 2nd 7.38e-02   vacuum<->SR switching mode -7.38e-02
+   E_++_-1  mode 0: -1.854e-05-2.92e-16j   SR frac 1.0000   | 2nd 3.59e-01
+   E_--_1   mode 0: +5.662e-16+8.14e-16j   SR frac 1.0000   | 2nd 6.68e-02   vacuum<->SR switching mode -6.68e-02
+   E_--_-1  mode 0: -6.733e-06+9.44e-17j   SR frac 1.0000   | 2nd 3.35e-01
+   E_+-_i   mode 0: -3.992e-05+1.78e-05j   SR frac 1.0000   | 2nd 4.23e-01
+   E_+-_-i  mode 0: -3.989e-05+1.77e-05j   SR frac 1.0000   | 2nd 5.03e-01
+   E_-+_i   mode 0: -3.989e-05-1.77e-05j   SR frac 1.0000   | 2nd 5.03e-01
+   E_-+_-i  mode 0: -3.992e-05-1.78e-05j   SR frac 1.0000   | 2nd 4.23e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 1.2e-05, E^-1 vs E^+1 shape mismatch = 9.5e-05
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 4.5e-06, E^-1 vs E^+1 shape mismatch = 3.7e-05
+coherence modes: cancellation residual A 6.3e-07, B 6.3e-07; A-B cross terms 6.4e-06
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 4.37e-05/3.35e-01 = 1.31e-04   switching modes kept: e [], o [0.06675]
+   qubit A, full metastable state: D_t(z_ee,z_oo)=1.99e-04  D_t(z_ee,z_eo)=3.51e-04  q-test err=9.3e-03 (top 4)  purity=0.7730  most negative eigenvalue=-1.6e-04
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.90e-06  D_t(z_ee,z_eo)=5.19e-05   incoherent weight=3.17e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.29e-05  diagonal mismatch=3.34e-05  largest off-diagonal=2.45e-05   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 1.30
+   qubit A, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=8.99e-05  D_t(z_ee,z_eo)=1.97e-04
+   qubit B, full metastable state: D_t(z_ee,z_oo)=1.99e-04  D_t(z_ee,z_eo)=3.51e-04  q-test err=9.3e-03 (top 4)  purity=0.7730  most negative eigenvalue=-1.6e-04
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.90e-06  D_t(z_ee,z_eo)=5.19e-05   incoherent weight=3.17e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.29e-05  diagonal mismatch=3.34e-05  largest off-diagonal=2.45e-05   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 1.30
+   qubit B, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=8.99e-05  D_t(z_ee,z_eo)=1.97e-04
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 3.4e-15   <Jx>_A = +1.500
+NS test WITH FOCK CUT n >= 2 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=6.72e-05  D_t(z_ee,z_eo)=2.14e-04 [2.15e-04]  purity(z)=0.7732  q-test err=1.2e-02 (top 4)  z[:4]=[0.8724 0.1085 0.0156 0.0027]
+   qubit B: D_t(z_ee,z_oo)=6.72e-05  D_t(z_ee,z_eo)=2.14e-04 [2.15e-04]  purity(z)=0.7732  q-test err=1.2e-02 (top 4)  z[:4]=[0.8724 0.1085 0.0156 0.0027]
+Relation: <Jx>_A=+1.500 <Jx>_B=-1.500  <a^2>_A=-32.08-21.29j <a^2>_B=32.08+21.29j  Z4 map residual=3.6e-15  which-qubit err=2.0e-03
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 2.62e-01)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.210 -0.210 -1.000   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.435e-01  intra-qubit coh 3.435e-01  inter-qubit coh 5.120e+01 / 5.120e+01
+    vacuum-cut sensitivity: cuts [0, 2, 6] -> D_t(z_ee,z_oo) [1.59e-04, 6.72e-05, 1.10e-04], D_t(z_ee,z_eo) [3.86e-04, 2.14e-04, 1.56e-04]  (max/min = 2.47)
+    saved ns_results/ns_N3_lam0.600_k20.050_wa0.250.npz  (11s)
+
+##### N=4: building Liouvillian (M=132, Hilbert dim 660, Liouville dim 435600) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~54450, estimated 2.1 GB each -> 6 in parallel
+    [E_--_1  ] dim    54450  LU    29.6M nnz (   6.0s)  total   13.8s  peak mem   1.3 GB  slowest: +2.96e-15+1.48e-15j
+    [E_++_1  ] dim    54450  LU    29.4M nnz (   5.5s)  total   15.3s  peak mem   1.3 GB  slowest: +4.93e-15-7.53e-16j
+    [E_--_-1 ] dim    54450  LU    28.3M nnz (   5.5s)  total   15.3s  peak mem   1.3 GB  slowest: -4.03e-06-1.07e-15j
+    [E_+-_-i ] dim    54450  LU    28.5M nnz (   5.5s)  total   15.4s  peak mem   1.3 GB  slowest: -8.52e-06+7.69e-07j
+    [E_+-_i  ] dim    54450  LU    28.3M nnz (   5.9s)  total   15.6s  peak mem   1.3 GB  slowest: -8.52e-06+7.74e-07j
+    [E_++_-1 ] dim    54450  LU    28.4M nnz (   5.4s)  total   22.9s  peak mem   1.3 GB  slowest: -4.96e-06+3.71e-16j
+
+=== N=4  M=132  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 660) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 3.1e-11
+Vacuum isolation: SR peak n=52, cut n_cut=6, P(valley)/P(peak)=3.6e-04, steady-state weight below cut=1.33e-04, P(0)=2.2e-05
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: +4.931e-15-7.53e-16j   SR frac 1.0000   | 2nd 2.56e-02   vacuum<->SR switching mode -2.56e-02
+   E_++_-1  mode 0: -4.962e-06+3.71e-16j   SR frac 1.0000   | 2nd 2.38e-01
+   E_--_1   mode 0: +2.958e-15+1.48e-15j   SR frac 1.0000   | 2nd 2.35e-02   vacuum<->SR switching mode -2.35e-02
+   E_--_-1  mode 0: -4.025e-06-1.07e-15j   SR frac 1.0000   | 2nd 2.55e-01
+   E_+-_i   mode 0: -8.522e-06+7.74e-07j   SR frac 1.0000   | 2nd 1.03e-01
+   E_+-_-i  mode 0: -8.523e-06+7.69e-07j   SR frac 1.0000   | 2nd 7.73e-02
+   E_-+_i   mode 0: -8.523e-06-7.69e-07j   SR frac 1.0000   | 2nd 7.73e-02
+   E_-+_-i  mode 0: -8.522e-06-7.74e-07j   SR frac 1.0000   | 2nd 1.03e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 1.0e-06, E^-1 vs E^+1 shape mismatch = 1.6e-05
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 5.4e-07, E^-1 vs E^+1 shape mismatch = 1.1e-05
+coherence modes: cancellation residual A 2.9e-07, B 2.9e-07; A-B cross terms 4.3e-07
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 8.56e-06/7.73e-02 = 1.11e-04   switching modes kept: e [], o []
+   qubit A, full metastable state: D_t(z_ee,z_oo)=2.24e-05  D_t(z_ee,z_eo)=1.25e-04  q-test err=3.4e-04 (top 4)  purity=0.7805  most negative eigenvalue=-6.8e-05
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=4.26e-07  D_t(z_ee,z_eo)=6.25e-06   incoherent weight=1.72e-04
+      coherence block on these states: D_t(z_oo,z_eo)=6.48e-06  diagonal mismatch=4.31e-06  largest off-diagonal=3.38e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.73
+   qubit A, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=3.23e-06  D_t(z_ee,z_eo)=2.72e-05
+   qubit B, full metastable state: D_t(z_ee,z_oo)=2.24e-05  D_t(z_ee,z_eo)=1.25e-04  q-test err=3.4e-04 (top 4)  purity=0.7805  most negative eigenvalue=-6.8e-05
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=4.26e-07  D_t(z_ee,z_eo)=6.25e-06   incoherent weight=1.72e-04
+      coherence block on these states: D_t(z_oo,z_eo)=6.48e-06  diagonal mismatch=4.31e-06  largest off-diagonal=3.38e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.73
+   qubit B, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=3.23e-06  D_t(z_ee,z_eo)=2.72e-05
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 4.7e-15   <Jx>_A = +2.000
+NS test WITH FOCK CUT n >= 6 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=1.19e-05  D_t(z_ee,z_eo)=4.82e-05 [4.82e-05]  purity(z)=0.7806  q-test err=6.0e-04 (top 4)  z[:4]=[0.877  0.1061 0.0142 0.0021]
+   qubit B: D_t(z_ee,z_oo)=1.19e-05  D_t(z_ee,z_eo)=4.82e-05 [4.82e-05]  purity(z)=0.7806  q-test err=6.0e-04 (top 4)  z[:4]=[0.877  0.1061 0.0142 0.0021]
+Relation: <Jx>_A=+2.000 <Jx>_B=-2.000  <a^2>_A=-43.18-28.65j <a^2>_B=43.18+28.65j  Z4 map residual=4.5e-15  which-qubit err=1.4e-04
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 1.75e-01)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.392 +0.000 -0.392 -1.000   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.413e-01  intra-qubit coh 3.413e-01  inter-qubit coh 6.881e+01 / 6.881e+01
+    vacuum-cut sensitivity: cuts [2, 6, 10] -> D_t(z_ee,z_oo) [2.36e-05, 1.19e-05, 2.02e-05], D_t(z_ee,z_eo) [1.13e-04, 4.82e-05, 3.48e-05]  (max/min = 3.24)
+    saved ns_results/ns_N4_lam0.600_k20.050_wa0.250.npz  (31s)
+
+##### N=5: building Liouvillian (M=154, Hilbert dim 924, Liouville dim 853776) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~106722, estimated 6.4 GB each -> 6 in parallel
+    [E_++_1  ] dim   106722  LU    86.2M nnz (  22.4s)  total   49.9s  peak mem   3.5 GB  slowest: +3.02e-15-1.42e-15j
+    [E_--_1  ] dim   106722  LU    85.7M nnz (  22.8s)  total   50.1s  peak mem   3.4 GB  slowest: +2.18e-15-2.18e-15j
+    [E_+-_-i ] dim   106722  LU    83.3M nnz (  21.1s)  total   53.7s  peak mem   3.4 GB  slowest: -7.34e-06+2.15e-08j
+    [E_+-_i  ] dim   106722  LU    83.3M nnz (  21.9s)  total   55.4s  peak mem   3.4 GB  slowest: -7.34e-06+4.49e-08j
+    [E_--_-1 ] dim   106722  LU    83.3M nnz (  21.2s)  total   58.3s  peak mem   3.4 GB  slowest: -4.01e-06-6.21e-16j
+    [E_++_-1 ] dim   106722  LU    83.3M nnz (  20.9s)  total   59.7s  peak mem   3.4 GB  slowest: -3.98e-06-2.82e-15j
+
+=== N=5  M=154  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 924) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 2.0e-11
+Vacuum isolation: SR peak n=64, cut n_cut=10, P(valley)/P(peak)=1.1e-04, steady-state weight below cut=1.67e-04, P(0)=3.6e-05
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: +3.020e-15-1.42e-15j   SR frac 1.0000   | 2nd 6.95e-03   vacuum<->SR switching mode -6.95e-03
+   E_++_-1  mode 0: -3.976e-06-2.82e-15j   SR frac 1.0000   | 2nd 1.97e-01
+   E_--_1   mode 0: +2.183e-15-2.18e-15j   SR frac 1.0000   | 2nd 2.07e-02   vacuum<->SR switching mode -2.07e-02
+   E_--_-1  mode 0: -4.011e-06-6.21e-16j   SR frac 1.0000   | 2nd 1.88e-01
+   E_+-_i   mode 0: -7.341e-06+4.49e-08j   SR frac 1.0000   | 2nd 2.27e-01
+   E_+-_-i  mode 0: -7.344e-06+2.15e-08j   SR frac 1.0000   | 2nd 1.01e-01
+   E_-+_i   mode 0: -7.344e-06-2.15e-08j   SR frac 1.0000   | 2nd 1.01e-01
+   E_-+_-i  mode 0: -7.341e-06-4.49e-08j   SR frac 1.0000   | 2nd 2.27e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 1.6e-07, E^-1 vs E^+1 shape mismatch = 1.2e-05
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 8.8e-08, E^-1 vs E^+1 shape mismatch = 1.0e-05
+coherence modes: cancellation residual A 2.0e-07, B 2.0e-07; A-B cross terms 6.3e-08
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 7.34e-06/1.01e-01 = 7.28e-05   switching modes kept: e [0.00695], o []
+   qubit A, full metastable state: D_t(z_ee,z_oo)=3.91e-05  D_t(z_ee,z_eo)=1.10e-04  q-test err=1.5e-05 (top 4)  purity=0.7846  most negative eigenvalue=-7.5e-05
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.95e-07  D_t(z_ee,z_eo)=4.90e-06   incoherent weight=1.40e-04
+      coherence block on these states: D_t(z_oo,z_eo)=4.99e-06  diagonal mismatch=3.40e-06  largest off-diagonal=2.80e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.67
+   qubit A, committed basin (committor>0.8, weight kept 0.99994): D_t(z_ee,z_oo)=1.27e-06  D_t(z_ee,z_eo)=2.17e-05
+   qubit B, full metastable state: D_t(z_ee,z_oo)=3.91e-05  D_t(z_ee,z_eo)=1.10e-04  q-test err=1.5e-05 (top 4)  purity=0.7846  most negative eigenvalue=-7.5e-05
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.95e-07  D_t(z_ee,z_eo)=4.90e-06   incoherent weight=1.40e-04
+      coherence block on these states: D_t(z_oo,z_eo)=4.99e-06  diagonal mismatch=3.40e-06  largest off-diagonal=2.80e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.67
+   qubit B, committed basin (committor>0.8, weight kept 0.99994): D_t(z_ee,z_oo)=1.27e-06  D_t(z_ee,z_eo)=2.17e-05
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 5.2e-15   <Jx>_A = +2.500
+NS test WITH FOCK CUT n >= 10 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=3.39e-06  D_t(z_ee,z_eo)=2.51e-05 [2.52e-05]  purity(z)=0.7846  q-test err=3.6e-05 (top 4)  z[:4]=[0.8795 0.1047 0.0135 0.0019]
+   qubit B: D_t(z_ee,z_oo)=3.39e-06  D_t(z_ee,z_eo)=2.51e-05 [2.52e-05]  purity(z)=0.7846  q-test err=3.6e-05 (top 4)  z[:4]=[0.8795 0.1047 0.0135 0.0019]
+Relation: <Jx>_A=+2.500 <Jx>_B=-2.500  <a^2>_A=-54.25-35.99j <a^2>_B=54.25+35.99j  Z4 map residual=5.2e-15  which-qubit err=1.1e-05
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 1.35e-01)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.402 +0.200 -0.200 -0.402 -1.000   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.400e-01  intra-qubit coh 3.400e-01  inter-qubit coh 8.641e+01 / 8.641e+01
+    vacuum-cut sensitivity: cuts [6, 10, 14] -> D_t(z_ee,z_oo) [7.11e-06, 3.39e-06, 4.62e-06], D_t(z_ee,z_eo) [4.69e-05, 2.51e-05, 1.82e-05]  (max/min = 2.57)
+    saved ns_results/ns_N5_lam0.600_k20.050_wa0.250.npz  (75s)
+
+##### N=6: building Liouvillian (M=176, Hilbert dim 1232, Liouville dim 1517824) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~189728, estimated 16.6 GB each -> 6 in parallel
+    [E_--_-1 ] dim   189728  LU   206.4M nnz (  73.6s)  total  143.3s  peak mem   8.0 GB  slowest: -4.11e-06+4.01e-16j
+    [E_++_1  ] dim   189728  LU   215.2M nnz (  81.6s)  total  147.1s  peak mem   8.3 GB  slowest: +2.62e-15+7.01e-16j
+    [E_--_1  ] dim   189728  LU   213.5M nnz (  80.9s)  total  147.7s  peak mem   8.2 GB  slowest: +2.20e-15+5.37e-16j
+    [E_+-_-i ] dim   189728  LU   207.1M nnz (  73.7s)  total  153.5s  peak mem   8.0 GB  slowest: -7.54e-06-4.45e-08j
+    [E_++_-1 ] dim   189728  LU   206.8M nnz (  73.9s)  total  164.4s  peak mem   8.0 GB  slowest: -3.94e-06+1.21e-15j
+    [E_+-_i  ] dim   189728  LU   207.1M nnz (  73.6s)  total  172.0s  peak mem   8.0 GB  slowest: -7.53e-06+5.53e-08j
+
+=== N=6  M=176  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 1232) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 9.6e-12
+Vacuum isolation: SR peak n=78, cut n_cut=16, P(valley)/P(peak)=5.4e-05, steady-state weight below cut=1.58e-04, P(0)=3.1e-05
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: +2.622e-15+7.01e-16j   SR frac 1.0000   | 2nd 8.82e-03   vacuum<->SR switching mode -8.82e-03
+   E_++_-1  mode 0: -3.938e-06+1.21e-15j   SR frac 1.0000   | 2nd 1.93e-01
+   E_--_1   mode 0: +2.203e-15+5.37e-16j   SR frac 1.0000   | 2nd 3.26e-02   vacuum<->SR switching mode -3.26e-02
+   E_--_-1  mode 0: -4.111e-06+4.01e-16j   SR frac 1.0000   | 2nd 1.93e-01
+   E_+-_i   mode 0: -7.534e-06+5.53e-08j   SR frac 1.0000   | 2nd 1.57e-01
+   E_+-_-i  mode 0: -7.535e-06-4.45e-08j   SR frac 1.0000   | 2nd 5.59e-02
+   E_-+_i   mode 0: -7.535e-06+4.45e-08j   SR frac 1.0000   | 2nd 5.59e-02
+   E_-+_-i  mode 0: -7.534e-06-5.53e-08j   SR frac 1.0000   | 2nd 1.57e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 2.9e-08, E^-1 vs E^+1 shape mismatch = 8.9e-06
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 2.9e-08, E^-1 vs E^+1 shape mismatch = 8.7e-06
+coherence modes: cancellation residual A 2.6e-07, B 2.6e-07; A-B cross terms 1.4e-08
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 7.54e-06/5.59e-02 = 1.35e-04   switching modes kept: e [0.00882], o []
+   qubit A, full metastable state: D_t(z_ee,z_oo)=2.18e-05  D_t(z_ee,z_eo)=1.00e-04  q-test err=2.4e-05 (top 4)  purity=0.7871  most negative eigenvalue=-7.0e-05
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.44e-07  D_t(z_ee,z_eo)=5.25e-06   incoherent weight=1.48e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.32e-06  diagonal mismatch=3.64e-06  largest off-diagonal=3.01e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.70
+   qubit A, committed basin (committor>0.8, weight kept 0.99994): D_t(z_ee,z_oo)=1.25e-06  D_t(z_ee,z_eo)=2.31e-05
+   qubit B, full metastable state: D_t(z_ee,z_oo)=2.18e-05  D_t(z_ee,z_eo)=1.00e-04  q-test err=2.4e-05 (top 4)  purity=0.7871  most negative eigenvalue=-7.0e-05
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.44e-07  D_t(z_ee,z_eo)=5.25e-06   incoherent weight=1.48e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.32e-06  diagonal mismatch=3.64e-06  largest off-diagonal=3.01e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.70
+   qubit B, committed basin (committor>0.8, weight kept 0.99994): D_t(z_ee,z_oo)=1.25e-06  D_t(z_ee,z_eo)=2.31e-05
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 6.9e-15   <Jx>_A = +3.000
+NS test WITH FOCK CUT n >= 16 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=1.62e-06  D_t(z_ee,z_eo)=1.71e-05 [1.72e-05]  purity(z)=0.7872  q-test err=1.6e-05 (top 4)  z[:4]=[0.881  0.1038 0.0131 0.0018]
+   qubit B: D_t(z_ee,z_oo)=1.62e-06  D_t(z_ee,z_eo)=1.71e-05 [1.72e-05]  purity(z)=0.7872  q-test err=1.6e-05 (top 4)  z[:4]=[0.881  0.1038 0.0131 0.0018]
+Relation: <Jx>_A=+3.000 <Jx>_B=-3.000  <a^2>_A=-65.32-43.33j <a^2>_B=65.32+43.33j  Z4 map residual=6.6e-15  which-qubit err=3.4e-06
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 9.82e-02)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.390 +0.206 +0.000 -0.206 -0.390   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.391e-01  intra-qubit coh 3.391e-01  inter-qubit coh 1.040e+02 / 1.040e+02
+    vacuum-cut sensitivity: cuts [12, 16, 20] -> D_t(z_ee,z_oo) [2.07e-06, 1.62e-06, 2.09e-06], D_t(z_ee,z_eo) [2.34e-05, 1.71e-05, 1.97e-05]  (max/min = 1.37)
+    saved ns_results/ns_N6_lam0.600_k20.050_wa0.250.npz  (206s)
+
+##### N=7: building Liouvillian (M=196, Hilbert dim 1568, Liouville dim 2458624) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~307328, estimated 36.9 GB each -> 2 in parallel
+    [E_++_1  ] dim   307328  LU   467.7M nnz ( 221.6s)  total  283.0s  peak mem  17.4 GB  slowest: -5.36e-15-1.34e-15j
+    [E_++_-1 ] dim   307328  LU   449.3M nnz ( 207.4s)  total  323.0s  peak mem  16.8 GB  slowest: -3.89e-06+9.79e-18j
+    [E_--_1  ] dim   307328  LU   465.4M nnz ( 222.4s)  total  301.5s  peak mem  17.4 GB  slowest: -1.26e-15+2.61e-16j
+    [E_--_-1 ] dim   307328  LU   448.0M nnz ( 203.3s)  total  325.6s  peak mem  16.8 GB  slowest: -3.97e-06+5.39e-16j
+    [E_+-_-i ] dim   307328  LU   449.5M nnz ( 204.2s)  total  301.9s  peak mem  16.8 GB  slowest: -7.77e-06-4.48e-08j
+    [E_+-_i  ] dim   307328  LU   449.6M nnz ( 205.5s)  total  384.3s  peak mem  17.4 GB  slowest: -7.77e-06+4.97e-08j
+
+=== N=7  M=196  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 1568) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 9.5e-12
+Vacuum isolation: SR peak n=92, cut n_cut=22, P(valley)/P(peak)=3.5e-05, steady-state weight below cut=1.48e-04, P(0)=2.4e-05
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: -5.362e-15-1.34e-15j   SR frac 1.0000   | 2nd 1.59e-02   vacuum<->SR switching mode -1.59e-02
+   E_++_-1  mode 0: -3.888e-06+9.79e-18j   SR frac 1.0000   | 2nd 1.60e-01
+   E_--_1   mode 0: -1.255e-15+2.61e-16j   SR frac 1.0000   | 2nd 1.00e-02   vacuum<->SR switching mode -1.00e-02
+   E_--_-1  mode 0: -3.973e-06+5.39e-16j   SR frac 1.0000   | 2nd 2.03e-01
+   E_+-_i   mode 0: -7.770e-06+4.97e-08j   SR frac 1.0000   | 2nd 1.16e-01
+   E_+-_-i  mode 0: -7.772e-06-4.48e-08j   SR frac 1.0000   | 2nd 6.45e-02
+   E_-+_i   mode 0: -7.772e-06+4.48e-08j   SR frac 1.0000   | 2nd 6.45e-02
+   E_-+_-i  mode 0: -7.770e-06-4.97e-08j   SR frac 1.0000   | 2nd 1.16e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 9.1e-09, E^-1 vs E^+1 shape mismatch = 8.0e-06
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 1.0e-08, E^-1 vs E^+1 shape mismatch = 7.9e-06
+coherence modes: cancellation residual A 1.7e-07, B 1.7e-07; A-B cross terms 3.7e-09
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 7.77e-06/6.45e-02 = 1.21e-04   switching modes kept: e [], o [0.01]
+   qubit A, full metastable state: D_t(z_ee,z_oo)=2.19e-05  D_t(z_ee,z_eo)=1.23e-04  q-test err=3.4e-05 (top 4)  purity=0.7888  most negative eigenvalue=-7.3e-05
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=9.73e-08  D_t(z_ee,z_eo)=5.88e-06   incoherent weight=1.80e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.83e-06  diagonal mismatch=4.16e-06  largest off-diagonal=3.33e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.76
+   qubit A, committed basin (committor>0.8, weight kept 0.99992): D_t(z_ee,z_oo)=2.23e-06  D_t(z_ee,z_eo)=2.69e-05
+   qubit B, full metastable state: D_t(z_ee,z_oo)=2.19e-05  D_t(z_ee,z_eo)=1.23e-04  q-test err=3.4e-05 (top 4)  purity=0.7888  most negative eigenvalue=-7.3e-05
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=9.73e-08  D_t(z_ee,z_eo)=5.88e-06   incoherent weight=1.80e-04
+      coherence block on these states: D_t(z_oo,z_eo)=5.83e-06  diagonal mismatch=4.16e-06  largest off-diagonal=3.33e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.76
+   qubit B, committed basin (committor>0.8, weight kept 0.99992): D_t(z_ee,z_oo)=2.23e-06  D_t(z_ee,z_eo)=2.69e-05
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 8.1e-15   <Jx>_A = +3.500
+NS test WITH FOCK CUT n >= 22 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=9.43e-07  D_t(z_ee,z_eo)=1.70e-05 [1.70e-05]  purity(z)=0.7889  q-test err=1.7e-05 (top 4)  z[:4]=[0.8821 0.1032 0.0127 0.0017]
+   qubit B: D_t(z_ee,z_oo)=9.43e-07  D_t(z_ee,z_eo)=1.70e-05 [1.70e-05]  purity(z)=0.7889  q-test err=1.7e-05 (top 4)  z[:4]=[0.8821 0.1032 0.0127 0.0017]
+Relation: <Jx>_A=+3.500 <Jx>_B=-3.500  <a^2>_A=-76.39-50.67j <a^2>_B=76.39+50.67j  Z4 map residual=7.8e-15  which-qubit err=2.1e-06
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 5.68e-02)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.394 +0.262 +0.077 -0.077 -0.262   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.385e-01  intra-qubit coh 3.385e-01  inter-qubit coh 1.216e+02 / 1.216e+02
+    vacuum-cut sensitivity: cuts [18, 22, 26] -> D_t(z_ee,z_oo) [1.14e-06, 9.43e-07, 1.09e-06], D_t(z_ee,z_eo) [1.75e-05, 1.70e-05, 1.27e-05]  (max/min = 1.38)
+    saved ns_results/ns_N7_lam0.600_k20.050_wa0.250.npz  (1033s)
+
+##### N=8: building Liouvillian (M=216, Hilbert dim 1944, Liouville dim 3779136) #####
+    block structure check: 0 matrix elements between blocks (must be 0)
+    6 blocks of dim ~472392, estimated 74.9 GB each -> 1 in parallel
+    [E_++_1  ] dim   472392  LU   920.1M nnz ( 593.4s)  total  711.4s  peak mem  33.9 GB  slowest: -9.26e-15+9.42e-16j
+    [E_++_-1 ] dim   472392  LU   887.6M nnz ( 546.2s)  total  830.6s  peak mem  33.9 GB  slowest: -4.04e-06-1.01e-16j
+    [E_--_1  ] dim   472392  LU   914.4M nnz ( 599.4s)  total  772.3s  peak mem  33.9 GB  slowest: -6.82e-15+2.00e-15j
+    [E_--_-1 ] dim   472392  LU   886.5M nnz ( 542.8s)  total 1027.5s  peak mem  33.9 GB  slowest: -3.89e-06+5.83e-16j
+    [E_+-_i  ] dim   472392  LU   887.6M nnz ( 546.1s)  total  960.3s  peak mem  33.9 GB  slowest: -8.04e-06+3.99e-08j
+    [E_+-_-i ] dim   472392  LU   885.8M nnz ( 539.6s)  total  727.6s  peak mem  33.9 GB  slowest: -7.98e-06-3.70e-09j
+
+=== N=8  M=216  lam=0.6  kappa2=0.05  wa=0.25  (Hilbert dim 1944) ===
+Fock cutoff check: slow-mode weight in top 4 Fock states = 7.6e-12
+Vacuum isolation: SR peak n=104, cut n_cut=28, P(valley)/P(peak)=2.8e-05, steady-state weight below cut=1.55e-04, P(0)=3.0e-05
+Selected superradiant mode per block (eigenvalue | |2nd-slowest eigenvalue| of the block):
+   E_++_1   mode 0: -9.255e-15+9.42e-16j   SR frac 1.0000   | 2nd 2.83e-03   vacuum<->SR switching mode -2.83e-03
+   E_++_-1  mode 0: -4.042e-06-1.01e-16j   SR frac 1.0000   | 2nd 6.78e-02
+   E_--_1   mode 0: -6.818e-15+2.00e-15j   SR frac 1.0000   | 2nd 1.24e-02   vacuum<->SR switching mode -1.24e-02
+   E_--_-1  mode 0: -3.886e-06+5.83e-16j   SR frac 1.0000   | 2nd 1.52e-01
+   E_+-_i   mode 0: -8.045e-06+3.99e-08j   SR frac 1.0000   | 2nd 1.28e-01
+   E_+-_-i  mode 0: -7.976e-06-3.70e-09j   SR frac 1.0000   | 2nd 7.63e-02
+   E_-+_i   mode 0: -7.976e-06+3.70e-09j   SR frac 1.0000   | 2nd 7.63e-02
+   E_-+_-i  mode 0: -8.045e-06-3.99e-08j   SR frac 1.0000   | 2nd 1.28e-01
+[e] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 3.2e-09, E^-1 vs E^+1 shape mismatch = 8.1e-06
+[o] weights A/B = 0.5000/0.5000, A-B coherence in steady state = 2.9e-09, E^-1 vs E^+1 shape mismatch = 7.6e-06
+coherence modes: cancellation residual A 1.4e-07, B 1.4e-07; A-B cross terms 1.3e-09
+CUT-FREE NS test (projection onto the slow manifold, no Fock cut):  eps = slow rate / next rate = 8.04e-06/6.78e-02 = 1.19e-04   switching modes kept: e [0.00283], o [0.01243]
+   qubit A, full metastable state: D_t(z_ee,z_oo)=1.73e-05  D_t(z_ee,z_eo)=1.04e-04  q-test err=5.4e-05 (top 4)  purity=0.7901  most negative eigenvalue=-7.1e-05
+   qubit A, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.53e-08  D_t(z_ee,z_eo)=6.17e-06   incoherent weight=1.68e-04
+      coherence block on these states: D_t(z_oo,z_eo)=6.17e-06  diagonal mismatch=4.33e-06  largest off-diagonal=3.49e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.77
+   qubit A, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=3.17e-06  D_t(z_ee,z_eo)=2.58e-05
+   qubit B, full metastable state: D_t(z_ee,z_oo)=1.73e-05  D_t(z_ee,z_eo)=1.04e-04  q-test err=5.4e-05 (top 4)  purity=0.7901  most negative eigenvalue=-7.1e-05
+   qubit B, dominant aux states (z>0.001, 4 states): D_t(z_ee,z_oo)=1.53e-08  D_t(z_ee,z_eo)=6.17e-06   incoherent weight=1.68e-04
+      coherence block on these states: D_t(z_oo,z_eo)=6.17e-06  diagonal mismatch=4.33e-06  largest off-diagonal=3.49e-06   D_t(z_ee,z_eo)/(|Re lam_coh|/wc) = 0.77
+   qubit B, committed basin (committor>0.8, weight kept 0.99993): D_t(z_ee,z_oo)=3.17e-06  D_t(z_ee,z_eo)=2.58e-05
+   Z4 map Pi4 rho_A Pi4^dag vs rho_B: 8.8e-15   <Jx>_A = +4.000
+NS test WITH FOCK CUT n >= 28 (old method; lobe only):
+   qubit A: D_t(z_ee,z_oo)=7.12e-07  D_t(z_ee,z_eo)=1.40e-05 [1.40e-05]  purity(z)=0.7902  q-test err=2.3e-05 (top 4)  z[:4]=[0.8829 0.1027 0.0125 0.0016]
+   qubit B: D_t(z_ee,z_oo)=7.12e-07  D_t(z_ee,z_eo)=1.40e-05 [1.40e-05]  purity(z)=0.7902  q-test err=2.3e-05 (top 4)  z[:4]=[0.8829 0.1027 0.0125 0.0016]
+Relation: <Jx>_A=+4.000 <Jx>_B=-4.000  <a^2>_A=-87.45-58.00j <a^2>_B=87.45+58.00j  Z4 map residual=8.5e-15  which-qubit err=1.7e-06
+          no computed slow mode carries A-B coherence (such a mode would have |lam| > 5.78e-02)
+          which-qubit memory l(m_x) at the SR peak, m_x = N/2, N/2-1, ...: +1.000 +0.365 +0.198 +0.107 +0.000 -0.107   (mean-field: SR collapses after k* = 1 spin flips)
+          decay rates: pop 3.380e-01  intra-qubit coh 3.380e-01  inter-qubit coh 1.392e+02 / 1.392e+02
+    vacuum-cut sensitivity: cuts [24, 28, 32] -> D_t(z_ee,z_oo) [8.32e-07, 7.12e-07, 6.98e-07], D_t(z_ee,z_eo) [1.72e-05, 1.40e-05, 1.29e-05]  (max/min = 1.33)
+    saved ns_results/ns_N8_lam0.600_k20.050_wa0.250.npz  (5146s)
+
+N   M    k*  eps       |Re lam| E++-1  |Re lam| E+-i  cut-free: D_t(ee,oo) D_t(ee,eo)  dominant: D_t(ee,oo) D_t(ee,eo)  incoh.w.  q-err    D/lam_c | cut: n_cut D_t(ee,oo) D_t(ee,eo)  AB-coh   Gam_inter/Gam_intra
+2   86   1   1.51e-03  1.85e-04       7.14e-04      2.29e-03  4.11e-03            1.91e-03  3.44e-03  3.41e-03  1.0e+00    4.80 | 2     8.99e-04  2.10e-03    1.7e-04  9.65e+01
+3   110  1   1.31e-04  1.85e-05       3.99e-05      1.99e-04  3.51e-04            1.90e-06  5.19e-05  3.17e-04  9.3e-03    1.30 | 2     6.72e-05  2.14e-04    1.2e-05  1.49e+02
+4   132  1   1.11e-04  4.96e-06       8.52e-06      2.24e-05  1.25e-04            4.26e-07  6.25e-06  1.72e-04  3.4e-04    0.73 | 6     1.19e-05  4.82e-05    1.0e-06  2.02e+02
+5   154  1   7.28e-05  3.98e-06       7.34e-06      3.91e-05  1.10e-04            1.95e-07  4.90e-06  1.40e-04  1.5e-05    0.67 | 10    3.39e-06  2.51e-05    1.6e-07  2.54e+02
+6   176  1   1.35e-04  3.94e-06       7.53e-06      2.18e-05  1.00e-04            1.44e-07  5.25e-06  1.48e-04  2.4e-05    0.70 | 16    1.62e-06  1.71e-05    2.9e-08  3.07e+02
+7   196  1   1.21e-04  3.89e-06       7.77e-06      2.19e-05  1.23e-04            9.73e-08  5.88e-06  1.80e-04  3.4e-05    0.76 | 22    9.43e-07  1.70e-05    9.1e-09  3.59e+02
+8   216  1   1.19e-04  4.04e-06       8.04e-06      1.73e-05  1.04e-04            1.53e-08  6.17e-06  1.68e-04  5.4e-05    0.77 | 28    7.12e-07  1.40e-05    3.2e-09  4.12e+02

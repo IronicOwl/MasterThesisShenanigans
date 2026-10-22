@@ -1,0 +1,100 @@
+{
+  "physics_key": {
+    "N": 15,
+    "M": 200,
+    "lam": 0.535,
+    "kappa2": 0.05,
+    "wc": 1.0,
+    "wa": 1.0,
+    "t_max": 70.0,
+    "n_t": 141,
+    "init": "infinite_temperature",
+    "init_nmax": 75,
+    "method": "vern7",
+    "atol": 1e-08,
+    "rtol": 1e-06
+  },
+  "updated": "2026-10-21T17:12:08",
+  "wigner": {
+    "x_max": 22.0,
+    "n_grid": 201,
+    "g": "sqrt(2) (qutip default)"
+  },
+  "sectors": {
+    "even": {
+      "n_traj": 2000,
+      "seeds": [
+        1
+      ],
+      "n_traj_per_seed": [
+        2000
+      ],
+      "trace_before_renorm": 1.0,
+      "n_mean": 91.34835887604704,
+      "n_mean_se": 0.9285742099626767,
+      "n_over_N": 6.089890591736469,
+      "n_over_N_se": 0.06190494733084511,
+      "var_n": 1892.8043967739177,
+      "mandel_Q": 19.72072689715546,
+      "Jz_over_N": -0.1708619272515893,
+      "Jx2_over_N2": 0.8905948049762927,
+      "a4_over_N2": [
+        33.380462864494696,
+        30.333339899643732
+      ],
+      "abs_a4_over_N2_traj_mean": 45.32071741361088,
+      "Jx_a2_over_N2": [
+        -5.6794246873429115,
+        -2.110164402779279
+      ],
+      "tail_start": 180,
+      "tail_weight": 0.0004636374801657273,
+      "truncation_ok": true,
+      "relax_drift_n_last20pct": 1.8414812691022036,
+      "relax_drift_sigma": 1.3859439384792294,
+      "relaxation_ok": true,
+      "compute_core_hours": 2.212056609193484,
+      "wigner_min": -0.09882886406060187,
+      "wigner_max": 0.3183098861837592,
+      "wigner_negativity_volume": 0.10967797049226292
+    },
+    "odd": {
+      "n_traj": 2000,
+      "seeds": [
+        1
+      ],
+      "n_traj_per_seed": [
+        2000
+      ],
+      "trace_before_renorm": 1.0,
+      "n_mean": 88.74362950502865,
+      "n_mean_se": 0.9594604628063942,
+      "n_over_N": 5.91624196700191,
+      "n_over_N_se": 0.06396403085375961,
+      "var_n": 2004.7728183312947,
+      "mandel_Q": 21.59061106146999,
+      "Jz_over_N": -0.19563905767540277,
+      "Jx2_over_N2": 0.8736500135973918,
+      "a4_over_N2": [
+        32.30425092166165,
+        29.16577835546467
+      ],
+      "abs_a4_over_N2_traj_mean": 43.737623734268496,
+      "Jx_a2_over_N2": [
+        -5.5161802740794155,
+        -2.0378619838970367
+      ],
+      "tail_start": 180,
+      "tail_weight": 0.00042706911054110754,
+      "truncation_ok": true,
+      "relax_drift_n_last20pct": 1.4504157087491905,
+      "relax_drift_sigma": 1.053326731060171,
+      "relaxation_ok": true,
+      "compute_core_hours": 2.1848410852087867,
+      "wigner_min": -0.31830988618378847,
+      "wigner_max": 0.10401344377591606,
+      "wigner_negativity_volume": 0.11547743588990043
+    }
+  },
+  "warnings": []
+}

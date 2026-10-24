@@ -1,0 +1,125 @@
+{
+ "params": {
+  "Ns": [
+   4,
+   6,
+   8,
+   10,
+   12
+  ],
+  "path": [
+   "0.10,0.47",
+   "0.70,0.47",
+   "0.70,0.80"
+  ],
+  "n_steps": [
+   16,
+   34
+  ],
+  "gamma": 0.1,
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "k": 6,
+  "sigma": 1e-08,
+  "tol": 1e-10,
+  "workers": 0,
+  "mem_gb": 100.0,
+  "tail_tol": 1e-07,
+  "with_trace": true,
+  "no_mirror": false,
+  "outdir": "Gap_Closure_LMG",
+  "overwrite": false,
+  "plot_only": false,
+  "selfcheck": false
+ },
+ "model": {
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "gamma": 0.1,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "sigma": 1e-08,
+  "k": 6,
+  "tol": 1e-10,
+  "tail_tol": 1e-07
+ },
+ "chi_c_mf": 0.26,
+ "path": [
+  [
+   0.1,
+   0.47
+  ],
+  [
+   0.7,
+   0.47
+  ],
+  [
+   0.7,
+   0.8
+  ]
+ ],
+ "mf_markers": [
+  [
+   0.27,
+   "spins order (weak Z4 breaks)"
+  ],
+  [
+   1.2033333333333336,
+   "Q unstable"
+  ],
+  [
+   1.1766666666666667,
+   "lobes appear"
+  ]
+ ],
+ "runs": [
+  {
+   "N": 4,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 40,
+   "seconds": 21.053617000579834,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 6,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 56,
+   "seconds": 120.24244451522827,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 8,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 64,
+   "seconds": 461.1099503040314,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 10,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 72,
+   "seconds": 1444.634425163269,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 12,
+   "workers": 6,
+   "M_min": 40,
+   "M_max": 88,
+   "seconds": 7368.350390195847,
+   "points_above_tail_tol": []
+  }
+ ]
+}

@@ -1,0 +1,106 @@
+{
+ "params": {
+  "Ns": [
+   6,
+   8,
+   10,
+   12,
+   14
+  ],
+  "path": [
+   "0.70,0.55",
+   "0.70,0.80"
+  ],
+  "n_steps": [
+   11
+  ],
+  "gamma": 0.1,
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "k": 6,
+  "sigma": 1e-08,
+  "tol": 1e-10,
+  "workers": 0,
+  "mem_gb": 100.0,
+  "tail_tol": 1e-07,
+  "with_trace": false,
+  "no_mirror": false,
+  "outdir": "Gap_Closure_LMG_S",
+  "overwrite": false,
+  "plot_only": false,
+  "selfcheck": false
+ },
+ "model": {
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "gamma": 0.1,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "sigma": 1e-08,
+  "k": 6,
+  "tol": 1e-10,
+  "tail_tol": 1e-07
+ },
+ "chi_c_mf": 0.26,
+ "path": [
+  [
+   0.7,
+   0.55
+  ],
+  [
+   0.7,
+   0.8
+  ]
+ ],
+ "mf_markers": [],
+ "runs": [
+  {
+   "N": 6,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 56,
+   "seconds": 25.143985271453857,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 8,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 64,
+   "seconds": 100.58778095245361,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 10,
+   "workers": 16,
+   "M_min": 40,
+   "M_max": 72,
+   "seconds": 366.7015233039856,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 12,
+   "workers": 6,
+   "M_min": 40,
+   "M_max": 88,
+   "seconds": 1851.6005642414093,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 14,
+   "workers": 3,
+   "M_min": 40,
+   "M_max": 96,
+   "seconds": 8856.524368047714,
+   "points_above_tail_tol": []
+  }
+ ]
+}

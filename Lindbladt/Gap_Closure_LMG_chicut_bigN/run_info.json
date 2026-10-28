@@ -1,0 +1,188 @@
+{
+ "params": {
+  "Ns": [
+   8,
+   10,
+   12,
+   14,
+   16,
+   18,
+   20,
+   22
+  ],
+  "path": [
+   "0.10,0.47",
+   "0.70,0.47",
+   "0.70,0.80"
+  ],
+  "n_steps": [
+   16,
+   34
+  ],
+  "lam": 0.55,
+  "chis": [
+   0.15,
+   0.4,
+   0.8,
+   1.0,
+   1.2
+  ],
+  "sectors": [
+   "E_++_-1",
+   "E_+-_i"
+  ],
+  "scaling_chis": null,
+  "gamma": 0.1,
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "k": 6,
+  "sigma": 1e-08,
+  "tol": 1e-10,
+  "workers": 0,
+  "mem_gb": 100.0,
+  "tail_tol": 1e-07,
+  "with_trace": false,
+  "no_mirror": false,
+  "outdir": "Gap_Closure_LMG_chicut_bigN",
+  "overwrite": false,
+  "plot_only": false,
+  "selfcheck": false
+ },
+ "model": {
+  "wc": 1.0,
+  "wa": 1.0,
+  "kappa2": 0.5,
+  "gamma": 0.1,
+  "mfac": 2.2,
+  "moff": 16,
+  "M_min": 40,
+  "M_fixed": 0,
+  "sigma": 1e-08,
+  "k": 6,
+  "tol": 1e-10,
+  "tail_tol": 1e-07
+ },
+ "chi_c_mf": 0.26,
+ "path": [
+  [
+   0.15,
+   0.55
+  ],
+  [
+   1.2,
+   0.55
+  ]
+ ],
+ "points": {
+  "chi": [
+   0.15,
+   0.4,
+   0.8,
+   1.0,
+   1.2
+  ],
+  "lam": [
+   0.55,
+   0.55,
+   0.55,
+   0.55,
+   0.55
+  ]
+ },
+ "sectors": [
+  "E_++_-1",
+  "E_+-_i"
+ ],
+ "mirrored": {
+  "E_-+_-i": "E_+-_i"
+ },
+ "mf_markers": [
+  [
+   0.10333333333333333,
+   "spins order (weak Z4 breaks)"
+  ],
+  [
+   0.44333333333333336,
+   "Q unstable"
+  ],
+  [
+   0.2833333333333333,
+   "lobes appear"
+  ]
+ ],
+ "runs": [
+  {
+   "N": 8,
+   "workers": 10,
+   "M_min": 40,
+   "M_max": 40,
+   "computed": 10,
+   "seconds": 14.02086329460144,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 10,
+   "workers": 10,
+   "M_min": 40,
+   "M_max": 40,
+   "computed": 10,
+   "seconds": 98.81789422035217,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 12,
+   "workers": 10,
+   "M_min": 40,
+   "M_max": 48,
+   "computed": 10,
+   "seconds": 197.03439331054688,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 14,
+   "workers": 10,
+   "M_min": 40,
+   "M_max": 48,
+   "computed": 10,
+   "seconds": 694.5025625228882,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 16,
+   "workers": 7,
+   "M_min": 40,
+   "M_max": 56,
+   "computed": 10,
+   "seconds": 1259.1996233463287,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 18,
+   "workers": 5,
+   "M_min": 40,
+   "M_max": 56,
+   "computed": 10,
+   "seconds": 3068.6924510002136,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 20,
+   "workers": 4,
+   "M_min": 40,
+   "M_max": 64,
+   "computed": 10,
+   "seconds": 8173.501893281937,
+   "points_above_tail_tol": []
+  },
+  {
+   "N": 22,
+   "workers": 3,
+   "aborted": "worker died"
+  }
+ ]
+}

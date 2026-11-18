@@ -13,7 +13,7 @@ Stable mean-field states and the Liouvillian zero modes they carry for N -> infi
 Critical lines (derivation in mean_field_section.tex):
     chi_c      = wa/4 + gamma^2/wa                         N unstable, Q appears (continuous)
     lam_p(chi) = wc / (2 |jx^Q|)                           Q parametrically unstable
-    lam_S(chi) = min over zeta of lam(zeta) on S branch    lobes appear at a fold (first order)
+    lam_c(chi) = min over zeta of lam(zeta) on S branch    lobes appear (first order)
 Regions: 2 (N), 2|8 (N+S), 4 (Q), 4|8 (Q+S), 8 (S). Valid for chi >= 0 and 0 <= gamma < wa/2.
 
 Each stable state's stability region is drawn as a light wash of its colour (N grey, Q blue,
@@ -23,7 +23,7 @@ Outputs in --outdir:
     phase_diagram.{pdf,png}         (chi, lam) plane, one panel per kappa2
     cuts.{pdf,png}                  chi-cut through 2->4, soft cavity mode of Q,
                                     lam-cuts through 4->8 (one per kappa2)
-    critical_lines_kappa2_<k>.csv   chi, lam_S, lam_p: the data behind the diagram
+    critical_lines_kappa2_<k>.csv   chi, lam_c, lam_p: the data behind the diagram
 
 Usage:
     python phase_diagram_248.py                                 # kappa2 = 0.05 and 0.5, gamma = 0.1
@@ -93,8 +93,8 @@ class Model:
         lam = np.sqrt(self.wc ** 2 + self.k2 ** 2 * r2 ** 2) / (2 * np.sqrt(jx2))
         return lam, r2, jx2
 
-    def fold(self, chi, n=3000):
-        """(zeta_S, lam_S): minimum of lam(zeta), where the lobes appear."""
+    def onset(self, chi, n=3000):
+        """(zeta_c, lam_c): minimum of lam(zeta), where the lobes appear."""
         zm = self.zeta_max(chi)
         z = zm * np.linspace(1e-6, 1 - 1e-9, n)
         i = int(np.argmin(self.branch(z, chi)[0]))
@@ -102,31 +102,31 @@ class Model:
                             bounds=(z[max(i - 1, 0)], z[min(i + 1, n - 1)]), options=dict(xatol=1e-13))
         return r.x, r.fun
 
-    def lam_S(self, chi):
-        return self.fold(chi)[1]
+    def lam_c(self, chi):
+        return self.onset(chi)[1]
 
     def s_states(self, chi, lam):
         """S states at (chi, lam), one copy each: list of (zeta, r^2, 'bright' | 'dim')."""
-        zS, lS = self.fold(chi)
-        if lam < lS:
+        zc, lc = self.onset(chi)
+        if lam < lc:
             return []
         f = lambda z: self.branch(z, chi)[0] - lam
         zm = self.zeta_max(chi)
         out = []
-        zb = brentq(f, 1e-12 * zm, zS, xtol=1e-15)
+        zb = brentq(f, 1e-12 * zm, zc, xtol=1e-15)
         out.append((zb, self.branch(zb, chi)[1], "bright"))
         hi = zm * (1 - 1e-12)
-        if lam > lS and f(hi) > 0:                     # no dim state once Q is unstable
-            zd = brentq(f, zS, hi, xtol=1e-15)
+        if lam > lc and f(hi) > 0:                     # no dim state once Q is unstable
+            zd = brentq(f, zc, hi, xtol=1e-15)
             out.append((zd, self.branch(zd, chi)[1], "dim"))
         return out
 
     def region(self, chi, lam):
         """Region label from the critical lines."""
-        lS = self.lam_S(chi)
+        lc = self.lam_c(chi)
         if chi < self.chi_c:
-            return "2" if lam < lS else "2|8"
-        if lam < lS:
+            return "2" if lam < lc else "2|8"
+        if lam < lc:
             return "4"
         return "4|8" if lam < self.lam_p(chi) else "8"
 
@@ -198,17 +198,17 @@ class Model:
 
 # =====================================================================================  data
 def critical_lines(m, chi_min, chi_max, n=900):
-    """chi grids left/right of chi_c with lam_S and lam_p (lam_p = inf at chi_c)."""
+    """chi grids left/right of chi_c with lam_c and lam_p (lam_p = inf at chi_c)."""
     out = {}
     if chi_min < m.chi_c:
         cl = np.linspace(chi_min, min(m.chi_c, chi_max), max(int(n * (min(m.chi_c, chi_max) - chi_min)
                                                                   / (chi_max - chi_min)), 50))
-        out["left"] = (cl, np.array([m.lam_S(c) for c in cl]))
+        out["left"] = (cl, np.array([m.lam_c(c) for c in cl]))
     if chi_max > m.chi_c:
         lo = max(m.chi_c, chi_min)
         cr = np.linspace(lo, chi_max, max(int(n * (chi_max - lo) / (chi_max - chi_min)), 50))
         lp = np.array([m.lam_p(c) if c > m.chi_c else np.inf for c in cr])
-        out["right"] = (cr, np.array([m.lam_S(c) for c in cr]), lp)
+        out["right"] = (cr, np.array([m.lam_c(c) for c in cr]), lp)
     return out
 
 
@@ -219,7 +219,7 @@ def save_csv(m, lines, path):
     if "right" in lines:
         rows += [(c, s, p) for c, s, p in zip(*lines["right"])]
     hdr = (f"wc={m.wc:g} wa={m.wa:g} gamma={m.g:g} kappa2={m.k2:g} chi_c={m.chi_c:.6g}\n"
-           "chi,lam_S,lam_p   (lam_p = nan where Q does not exist, inf at chi_c)")
+           "chi,lam_c,lam_p   (lam_p = nan where Q does not exist, inf at chi_c)")
     np.savetxt(path, np.array(rows), delimiter=",", header=hdr, fmt="%.8g")
 
 
@@ -283,7 +283,7 @@ def draw_phase_diagram(plt, models, a):
             ax.fill_between(cl, ylim[0], ylim[1], color=GREY, alpha=WASH, lw=0)
             ax.fill_between(cl, np.clip(sl, *ylim), ylim[1], color=ORANGE, alpha=WASH, lw=0)
             ax.plot(cl, sl, color=ORANGE, lw=1.6)
-        if "right" in L:                               # Q stable below lam_p, S above lam_S
+        if "right" in L:                               # Q stable below lam_p, S above lam_c
             cr, sr, pr = L["right"]
             ax.fill_between(cr, ylim[0], np.clip(pr, *ylim), color=BLUE, alpha=WASH, lw=0)
             ax.fill_between(cr, np.clip(sr, *ylim), ylim[1], color=ORANGE, alpha=WASH, lw=0)
@@ -320,7 +320,7 @@ def draw_phase_diagram(plt, models, a):
     axes[0, 0].set_ylabel(r"two-photon coupling $\lambda$")
     m0 = models[0]
     handles = [Line2D([], [], color=INK2, lw=1.2, label=r"$\chi_c$: spins order (2$\to$4, continuous)"),
-               Line2D([], [], color=ORANGE, lw=1.6, label=r"$\lambda_S$: lobes appear (fold)"),
+               Line2D([], [], color=ORANGE, lw=1.6, label=r"$\lambda_c$: lobes appear"),
                Line2D([], [], color=BLUE, lw=1.6, label=r"$\lambda_p$: Q unstable, $2\lambda|j_x|=\omega_c$")]
     if not a.no_cuts:
         handles.append(Line2D([], [], color=INK2, lw=0.7, ls=(0, (1, 2)),
@@ -435,26 +435,26 @@ def draw_cuts(plt, models, a):
         chi = a.cut_chi
         base, base_col = ("Q", BLUE) if chi > m.chi_c else ("N", GREY)
         lp = m.lam_p(chi) if base == "Q" else np.inf
-        zS, lS = m.fold(chi)
+        zc, lc = m.onset(chi)
         zm = m.zeta_max(chi)
         z = zm * np.concatenate([np.logspace(-7, -1, 600, endpoint=False), np.linspace(0.1, 1 - 1e-9, 1500)])
         lam, r2, _ = m.branch(z, chi)
         keep = lam <= hi * 1.05
-        bright, dim = keep & (z <= zS), keep & (z >= zS)
+        bright, dim = keep & (z <= zc), keep & (z >= zc)
         ax.axvspan(lo, min(lp, hi), color=base_col, alpha=WASH, lw=0)
-        ax.axvspan(lS, hi, color=ORANGE, alpha=WASH, lw=0)
+        ax.axvspan(lc, hi, color=ORANGE, alpha=WASH, lw=0)
         ax.plot([lo, min(lp, hi)], [0, 0], color=base_col, **solid)
         if lp < hi:
             ax.plot([lp, hi], [0, 0], color=base_col, **dash)
         ax.plot(lam[bright], r2[bright], color=ORANGE, **solid)
         ax.plot(lam[dim], r2[dim], color=ORANGE, **dash)
         ymax = 1.08 * r2[bright][lam[bright] <= hi].max()
-        ax.axvline(lS, color=ORANGE, lw=0.8)
-        ax.annotate(rf"$\lambda_S={lS:.4g}$", (lS, 0.72 * ymax), xytext=(-2.5, 0), textcoords="offset points",
+        ax.axvline(lc, color=ORANGE, lw=0.8)
+        ax.annotate(rf"$\lambda_c={lc:.4g}$", (lc, 0.72 * ymax), xytext=(-2.5, 0), textcoords="offset points",
                     rotation=90, ha="right", va="center", color=INK2, fontsize=7.5)
-        rS = m.branch(zS, chi)[1]
+        r2c = m.branch(zc, chi)[1]
         arrow = dict(arrowstyle="-|>", color=INK, lw=0.8, mutation_scale=7, shrinkA=0, shrinkB=0)
-        ax.annotate("", xy=(lS, 0), xytext=(lS, rS), arrowprops=arrow)            # S -> base at lam_S
+        ax.annotate("", xy=(lc, 0), xytext=(lc, r2c), arrowprops=arrow)           # S -> base at lam_c
         if lp < hi:
             ax.axvline(lp, color=BLUE, lw=0.8)
             ax.annotate(rf"$\lambda_p={lp:.4g}$", (lp, 0.72 * ymax), xytext=(2.5, 0), textcoords="offset points",
@@ -484,10 +484,10 @@ def check_regions(models, a, n=41, margin=0.004):
     for m in models:
         counts, bad = {}, []
         for chi in np.linspace(a.chi_min, a.chi_max, n):
-            lS = m.lam_S(chi)
+            lc = m.lam_c(chi)
             lp = m.lam_p(chi) if chi > m.chi_c else np.inf
             for lam in np.linspace(a.lam_min, a.lam_max, n):
-                if abs(chi - m.chi_c) < margin or abs(lam - lS) < margin or abs(lam - lp) < margin:
+                if abs(chi - m.chi_c) < margin or abs(lam - lc) < margin or abs(lam - lp) < margin:
                     continue                            # too close to a boundary to classify reliably
                 want, got = m.region(chi, lam), m.classify_direct(chi, lam)
                 counts[want] = counts.get(want, 0) + 1
@@ -535,11 +535,11 @@ def main():
         print(f"chi = {a.cut_chi:g}: Q has jz = {m0.q_jz(a.cut_chi):.4f}, |jx| = {m0.q_jx(a.cut_chi):.4f},"
               f" lam_p = {m0.lam_p(a.cut_chi):.4f} (any kappa2)")
     for m in models:
-        zS, lS = m.fold(a.cut_chi)
-        msg = f"kappa2 = {m.k2:g}: lam_S(chi={a.cut_chi:g}) = {lS:.4f} (n/N = {m.branch(zS, a.cut_chi)[1]:.3f} at the fold)"
+        zc, lc = m.onset(a.cut_chi)
+        msg = f"kappa2 = {m.k2:g}: lam_c(chi={a.cut_chi:g}) = {lc:.4f} (n/N = {m.branch(zc, a.cut_chi)[1]:.3f} there)"
         if a.cut_chi > m.chi_c:
             lp = m.lam_p(a.cut_chi)
-            msg += f", Q+S coexist for {lS:.4f} < lam < {lp:.4f}, jump at lam_p to n/N = {m.s_states(a.cut_chi, lp)[0][1]:.3f}"
+            msg += f", Q+S coexist for {lc:.4f} < lam < {lp:.4f}, jump at lam_p to n/N = {m.s_states(a.cut_chi, lp)[0][1]:.3f}"
         print(msg)
 
     plt = setup_style(a.serif)

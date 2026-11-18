@@ -1,5 +1,5 @@
 # wc=1 wa=1 gamma=0.1 kappa2=0.5 chi_c=0.26
-# chi,lam_S,lam_p   (lam_p = nan where Q does not exist, inf at chi_c)
+# chi,lam_c,lam_p   (lam_p = nan where Q does not exist, inf at chi_c)
 0,0.61479867,nan
 0.0011158798,0.61459353,nan
 0.0022317597,0.61438858,nan

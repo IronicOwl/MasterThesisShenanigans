@@ -123,7 +123,7 @@ TRACE = ["E_++_1", "E_--_1"]
 MIRROR = {"E_-+_-i": "E_+-_i", "E_-+_i": "E_+-_-i"}           # sector : computed partner
 LAYOUT = [["E_++_-1", "E_--_-1"], ["E_+-_i", "E_-+_-i"], ["E_+-_-i", "E_-+_i"]]
 ZVAL = {"1": 1.0, "-1": -1.0, "i": 1j, "-i": -1j}
-TEX = {"1": "1", "-1": "-1", "i": "i", "-i": "-i"}
+SUP = {"1": 0, "i": 1, "-1": 2, "-i": 3}                     # weak eigenvalue i^k -> superscript k
 
 
 def parse_sector(s):
@@ -132,8 +132,11 @@ def parse_sector(s):
 
 
 def sector_label(s):
+    """Thesis notation E^k_{lr} (Eq. 3.30): l, r = parity of ket and bra (+ -> 0, - -> 1; equal to
+    (a^+a + Jz) mod 2 because N is even), k = weak charge difference, i.e. Pi_4 eigenvalue i^k."""
     _, par, z = s.split("_")
-    return rf"$E_{{{par},\,{TEX[z]}}}$"
+    l, r = ("0" if p == "+" else "1" for p in par)
+    return rf"$E^{{{SUP[z]}}}_{{{l}{r}}}$"
 
 
 # ------------------------------------------------------------------ mean field (N -> infinity)
@@ -677,10 +680,11 @@ def plot(a):
         xlabel = r"path through $(\chi, \lambda)$"
         ticks = (X, [f"({c:g}, {l:g})" for c, l in V])
     cols = plt.cm.viridis(np.linspace(0.05, 0.9, len(Ns)))
-    path_txt = " $\\to$ ".join(f"({c:g}, {l:g})" for c, l in V)
-    for key, ylab, scales, stem in (
-            ("gap", r"$-\mathrm{Re}\,\lambda$ (slowest mode)", ("log", "lin"), "gap_closure"),
-            ("absgap", r"$\min|\lambda|$ (distance from zero)", ("log",), "zero_mode_distance")):
+    for key, ylab, scales, stem, figtitle in (
+            ("gap", r"$-\mathrm{Re}\,\lambda$ (slowest mode)", ("log", "lin"), "gap_closure",
+             "Real part of the dissipative gap vs coupling parameters"),
+            ("absgap", r"$\min|\lambda|$ (distance from zero)", ("log",), "zero_mode_distance",
+             "Absolute value of the dissipative gap vs coupling parameters")):
         for scale in scales:
             fig, axes = plt.subplots(len(layout), 2, figsize=(10.5, 3.5 * len(layout) + 0.8),
                                      sharex=True, squeeze=False)
@@ -724,8 +728,7 @@ def plot(a):
                 col, ls = MSTY.get(kind, ("gray", ":"))
                 ax0.plot([], [], ls=ls, color=col, lw=1.1, label="MF: " + kind)
             ax0.legend(fontsize=8.5, loc="best", framealpha=0.9)
-            fig.suptitle(rf"$-(\chi/N)J_x^2$, $\gamma$={o['gamma']:g}, $\omega_c$={o['wc']:g}, "
-                         rf"$\omega_a$={o['wa']:g}, $\kappa_2$={o['kappa2']:g};  path {path_txt}", fontsize=11.5)
+            fig.suptitle(figtitle, fontsize=12.5)
             fig.tight_layout()
             fn = os.path.join(a.outdir, f"{stem}_{scale}.png")
             fig.savefig(fn, dpi=200)

@@ -321,7 +321,7 @@ def draw_phase_diagram(plt, models, a):
     m0 = models[0]
     handles = [Line2D([], [], color=INK2, lw=1.2, label=r"$\chi_c$: spins order (2$\to$4, continuous)"),
                Line2D([], [], color=ORANGE, lw=1.6, label=r"$\lambda_c$: lobes appear"),
-               Line2D([], [], color=BLUE, lw=1.6, label=r"$\lambda_p$: Q unstable, $2\lambda|j_x|=\omega_c$")]
+               Line2D([], [], color=BLUE, lw=1.6, label=r"$\lambda_q$: Q unstable, $2\lambda|j_x|=\omega_c$")]
     if not a.no_cuts:
         handles.append(Line2D([], [], color=INK2, lw=0.7, ls=(0, (1, 2)),
                               label=rf"cuts: $\lambda={a.cut_lam:g}$, $\chi={a.cut_chi:g}$"))
@@ -414,7 +414,7 @@ def draw_cuts(plt, models, a):
         ax.axvspan(lo, lp, color=BLUE, alpha=WASH, lw=0)
         ax.axvspan(lp, hi, color=ORANGE, alpha=WASH, lw=0)
         ax.axvline(lp, color=BLUE, lw=0.8)
-        ax.text(lp, 0.9 * m0.wc, rf" $\lambda_p={lp:.4g}$", color=INK2, fontsize=7.5, ha="left", va="center")
+        ax.text(lp, 0.9 * m0.wc, rf" $\lambda_q={lp:.4g}$", color=INK2, fontsize=7.5, ha="left", va="center")
         ax.axhline(m0.wc, color=GREY, lw=0.8)
         ax.text(lo, m0.wc, r" N: $\omega_c$", color=INK2, fontsize=7.5, va="bottom")
         ax.text(0.5 * (lp + hi), 0.5 * m0.wc, "Q unstable\n(lobes)", color=INK2, fontsize=7.5,
